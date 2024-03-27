@@ -51,7 +51,7 @@ router.get("/profile", async (req, res) => {
   try {
     const token = req.cookies.auth;
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json(null);
     }
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await UserModel.findOne({ email: payload.email });

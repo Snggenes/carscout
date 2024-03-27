@@ -1,17 +1,12 @@
 import { Link } from "react-router-dom";
-import { Loader } from "lucide-react";
 
 import { Button } from "../../../components/ui/button";
+import { useUser } from "../../contexts/userContext";
 
 export function NavProfile() {
-  let user = 'abc'
-  if (user) {
-    return (
-      <div>
-        <Loader className="h-5 w-5"/>
-      </div>
-    );
-  }
+  const { user } = useUser();
+  console.log(user);
+  
   return (
     <div>
       <Button variant="ghost" asChild>
