@@ -47,16 +47,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/logout", (req, res) => {
+  return res.clearCookie("auth").json({ message: "Logged out" });
+});
+
 router.get("/profile", async (req, res) => {
   try {
     const token = req.cookies.auth;
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized token" });
     }
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await UserModel.findOne({ email: payload.email });
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized email" });
     }
     return res.json({ user });
   } catch (error) {

@@ -17,13 +17,14 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {
-    console.log("Connected to MongoDB");
-})
+  console.log("Connected to MongoDB");
+});
 
 const server = http.createServer(app);
 

@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App";
 import UserProvider from "./contexts/userContext";
 import Register from "./pages/register/Register";
+import Login from "./pages/login/Login";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   }
 ]);
 

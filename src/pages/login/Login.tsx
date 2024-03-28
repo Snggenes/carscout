@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { Navbar } from "../../components/navbar/Navbar";
+import { Navbar } from "@/components/navbar/Navbar";
 import { useUser } from "../../contexts/userContext";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 
-export default function Register() {
-  const { user } = useUser();
+export default function Login() {
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,19 +23,20 @@ export default function Register() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
   } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
-    const response = await fetch("http://localhost:4000/auth/register", {
+    const response = await fetch("http://localhost:4000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     });
     const postData = await response.json();
     console.log(postData);
+    setUser(null);
     reset();
   };
 
@@ -48,12 +49,6 @@ export default function Register() {
           className="p-4 border flex flex-col gap-2 w-[424px]"
         >
           <Input
-            {...register("username", { required: "Username is required" })}
-            type="text"
-            placeholder="Username"
-          />
-          {errors.username && <p>{`${errors.username.message}`}</p>}
-          <Input
             {...register("email", { required: "Email is required" })}
             type="email"
             placeholder="Email"
@@ -65,20 +60,9 @@ export default function Register() {
             placeholder="Password"
           />
           {errors.password && <p>{`${errors.password.message}`}</p>}
-          <Input
-            {...register("confirmPassword", {
-              required: "Confirm Password is required",
-              validate: (value) =>
-                value === getValues("password") || "Passwords do not match",
-            })}
-            type="password"
-            placeholder="Confirm Password"
-          />
-          {errors.confirmPassword && (
-            <p>{`${errors.confirmPassword.message}`}</p>
-          )}
+          
           <Button variant="ghost" disabled={isSubmitting}>
-            Register
+            Login
           </Button>
         </form>
       </div>
