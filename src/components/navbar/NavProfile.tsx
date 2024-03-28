@@ -5,7 +5,16 @@ import { useUser } from "../../contexts/userContext";
 
 export function NavProfile() {
   const { user } = useUser();
-  console.log(user);
+
+  if (user?.username) {
+    return (
+      <div>
+        <Button variant="ghost" asChild>
+          <Link to="/profile">Profile</Link>
+        </Button>
+      </div>
+    );
+  }
   
   return (
     <div>

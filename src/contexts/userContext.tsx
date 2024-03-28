@@ -1,5 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import type { User } from "../types/types";
+import { Loader } from "lucide-react";
+
+import type { User } from "../../lib/types/types";
 
 type UserContextType = {
     user: User | null;
@@ -33,7 +35,11 @@ export default function UserProvider({
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {children}
+      {user ? children : 
+      <div className=" h-screen w-screen flex items-center justify-center">
+        <Loader size="50px" />
+      </div>
+      }
     </UserContext.Provider>
   );
 }
