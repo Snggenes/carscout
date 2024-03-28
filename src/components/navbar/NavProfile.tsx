@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Button } from "../../../components/ui/button";
 import { useUser } from "../../contexts/userContext";
@@ -13,7 +14,7 @@ export function NavProfile() {
     });
     const data = await response.json();
     console.log(data);
-    
+    toast.info("You are now logged out");
     setUser(null);
   };
 
