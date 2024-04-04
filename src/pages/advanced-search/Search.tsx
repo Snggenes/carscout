@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { carData, prices, years, body, fuel } from "../../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
