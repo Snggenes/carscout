@@ -21,11 +21,22 @@ const carSchema = new mongoose.Schema({
   body: { type: String, required: true, enum: body },
   transmission: { type: String, required: true, enum: transmission },
   fuel: { type: String, required: true, enum: fuel },
-  image: [{ type: String, default: []}],
+  image: [{ type: String, default: [] }],
   description: { type: String },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  power: { type: String, required: true },
+  address: {
+    type: {
+      city: { type: String, required: true },
+      street: { type: String, required: true },
+      house_number: { type: String, required: true },
+      postcode: { type: String, required: true },
+      province: { type: String, required: true },
+      latitude: { type: Number, required: true },
+      longitude: { type: Number, required: true },
+    }, required: true
+  },
 });
-
 
 const CarModel = mongoose.model("Car", carSchema);
 

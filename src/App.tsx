@@ -9,6 +9,9 @@ import Register from "./pages/register/Register";
 import Favorites from "./pages/favorites/Favorites";
 import Profile from "./pages/profile/Profile";
 import List from "./pages/list/List";
+import Sell from "./pages/sell/Sell";
+import ListingForm from "./pages/listing-form/ListingForm";
+import Listing from "./pages/listing/Listing";
 
 import Search from "./pages/advanced-search/Search";
 
@@ -27,6 +30,9 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/list/:brand" element={<List />} />
             <Route path="/advanced-search" element={<Search />} />
+            <Route path="/sell" element={<Sell />} />
+            <Route path="/listing-form" element={<ListingForm />} />
+            <Route path="/listing/:id" element={<Listing />} />
           </Routes>
         </div>
       </Router>
