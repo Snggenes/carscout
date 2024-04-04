@@ -5,7 +5,7 @@ export function NavLinks() {
   return (
     <div className="hidden lg:flex flex-row gap-2">
         <Button variant="link" asChild>
-            <Link to="/search">Search</Link>
+            <Link to="/advanced-search">Advanced Search</Link>
         </Button>
         <Button variant="link" asChild>
             <Link to="/sell">Sell</Link>

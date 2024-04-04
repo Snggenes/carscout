@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 
 const authRouter = require("./routes/auth");
+const carsRouter = require('./routes/cars')
+const addressVerifyRouter = require("./routes/addressVerify");
+const distanceCalculationRouter = require("./routes/distanceCalculation");
 
 const app = express();
 
@@ -20,6 +23,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
+app.use('/cars', carsRouter);
+app.use("/address-verify", addressVerifyRouter);
+app.use("/distance-calculation", distanceCalculationRouter);
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {

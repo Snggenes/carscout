@@ -1,4 +1,4 @@
-export const carData = [
+const carData = [
   {
     brand: "Acura",
     models: [
@@ -1431,7 +1431,7 @@ export const carData = [
   },
 ];
 
-export const prices = [
+const prices = [
   "1000",
   "2000",
   "3000",
@@ -1531,10 +1531,10 @@ export const prices = [
   "97000",
   "98000",
   "99000",
-  "100000"
-]
+  "100000",
+];
 
-export const years = [
+const years = [
   "2021",
   "2020",
   "2019",
@@ -1634,10 +1634,10 @@ export const years = [
   "1925",
   "1924",
   "1923",
-  "1922"
-]
+  "1922",
+];
 
-export const km = [
+const km = [
   "1000",
   "2000",
   "3000",
@@ -1758,9 +1758,9 @@ export const km = [
   "280000",
   "290000",
   "300000",
-]
+];
 
-export const body = [
+const body = [
   "Convertible",
   "Coupe",
   "Hatchback",
@@ -1771,15 +1771,19 @@ export const body = [
   "Truck",
   "Van",
   "Wagon",
-]
+];
 
-export const transmission = [
-  "Automatic",
-  "Manual",
-]
+const transmission = ["Automatic", "Manual"];
 
-export const fuel = [
-  "Diesel",
-  "Electric",
-  "Hybrid",
-]
+const fuel = ["Diesel", "Electric", "Hybrid", "Gasoline", "Benzine"];
+
+
+module.exports = {
+  carData,
+  prices,
+  years,
+  km,
+  body,
+  transmission,
+  fuel,
+}

@@ -10,9 +10,11 @@ import Favorites from "./pages/favorites/Favorites";
 import Profile from "./pages/profile/Profile";
 import List from "./pages/list/List";
 
+import Search from "./pages/advanced-search/Search";
+
 export default function App() {
   return (
-    <div className="relative">
+    <div className="">
       <ToastContainer position="top-center" />
       <Router>
         <Navbar />
@@ -23,7 +25,8 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/list/:brand/:model/:price/:year" element={<List />} />
+            <Route path="/list/:brand" element={<List />} />
+            <Route path="/advanced-search" element={<Search />} />
           </Routes>
         </div>
       </Router>

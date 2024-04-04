@@ -7,7 +7,7 @@ export function Navbar() {
   const navigate = useNavigate();
   return (
     <>
-      <header className="h-16 w-full border-b-2 border-slate-200 px-4 absolute">
+      <header className="h-16 w-full border-b-2 border-slate-200 px-4 absolute bg-white">
         <div className="xl:max-w-screen-xl mx-auto flex items-center justify-between h-full">
           <div
             onClick={() => navigate("/")}
