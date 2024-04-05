@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Car } from "../../../lib/types/types";
+import  Map  from "@/components/Map";
 
 import {
   Carousel,
@@ -9,11 +10,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../../components/ui/carousel";
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "../../../components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "../../../components/ui/card";
+
 
 export default function Listing() {
   const { id } = useParams();
   const [car, setCar] = useState<Car | null>(null);
+  const [center, setCenter] = useState<[number, number]>();
 
   const fetchCar = async () => {
     try {
@@ -24,6 +34,7 @@ export default function Listing() {
       const data = await response.json();
       console.log(data);
       setCar(data);
+      setCenter([data.address.latitude, data.address.longitude]);
     } catch (error) {
       console.error(error);
     }
@@ -37,11 +48,11 @@ export default function Listing() {
     <div className="p-20 flex flex-row gap-8">
       <Carousel className="w-full max-w-lg">
         <CarouselContent>
-            {car?.image.map((image, index) => (
-                <CarouselItem key={index}>
-                <img src={image} alt="" />
-                </CarouselItem>
-            ))}
+          {car?.image.map((image, index) => (
+            <CarouselItem key={index}>
+              <img src={image} alt="" />
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
@@ -49,7 +60,9 @@ export default function Listing() {
       <div className="mx-20">
         <Card>
           <CardHeader>
-            <CardTitle>{car?.brand} {car?.model}</CardTitle>
+            <CardTitle>
+              {car?.brand} {car?.model}
+            </CardTitle>
             <CardDescription>{car?.year}</CardDescription>
           </CardHeader>
           <CardContent>
@@ -60,6 +73,7 @@ export default function Listing() {
           </CardFooter>
         </Card>
       </div>
+       {center && <Map lat={Number(car?.address.latitude)} lng={Number(car?.address.longitude)}/>}
     </div>
   );
 }
