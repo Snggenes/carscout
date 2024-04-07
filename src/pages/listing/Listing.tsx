@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Car } from "../../../lib/types/types";
-import  Map  from "@/components/Map";
+import Map from "@/components/Map";
 
 import {
   Carousel,
@@ -19,29 +19,23 @@ import {
   CardContent,
 } from "../../../components/ui/card";
 
+import useFetch from "@/hooks/useFetch";
 
 export default function Listing() {
   const { id } = useParams();
   const [car, setCar] = useState<Car | null>(null);
   const [center, setCenter] = useState<[number, number]>();
 
-  const fetchCar = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/cars?id=${id}`);
-      if (!response.ok) {
-        throw new Error("Something went wrong!");
-      }
-      const data = await response.json();
-      console.log(data);
-      setCar(data);
-      setCenter([data.address.latitude, data.address.longitude]);
-    } catch (error) {
-      console.error(error);
-    }
+  const onSuccess = (data: any) => {
+    console.log(data);
+    setCar(data);
+    setCenter([data.address.latitude, data.address.longitude]);
   };
 
+  const { performFetch } = useFetch(`cars?id=${id}`, onSuccess);
+
   useEffect(() => {
-    fetchCar();
+    performFetch();
   }, [id]);
 
   return (
@@ -73,7 +67,12 @@ export default function Listing() {
           </CardFooter>
         </Card>
       </div>
-       {center && <Map lat={Number(car?.address.latitude)} lng={Number(car?.address.longitude)}/>}
+      {center && (
+        <Map
+          lat={Number(car?.address.latitude)}
+          lng={Number(car?.address.longitude)}
+        />
+      )}
     </div>
   );
 }

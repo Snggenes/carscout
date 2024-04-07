@@ -11,10 +11,10 @@ export default function Profile() {
       navigate("/login");
     }
   }, []);
-  
+
   return (
     <div>
-      <h1>Profile</h1>
+      <h1>hi {user?.username}</h1>
     </div>
   );
 }

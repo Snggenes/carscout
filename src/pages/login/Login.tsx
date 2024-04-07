@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { toast } from "react-toastify";
+import useFetch from "@/hooks/useFetch";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -33,20 +34,20 @@ export default function Login() {
     reset,
   } = useForm();
 
-  const onSubmit = async (data: FieldValues) => {
-    const response = await fetch("http://localhost:4000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      credentials: "include",
-    });
-    const postData = await response.json();
-    console.log(postData);
+  const onSuccess = async (data: any) => {
+    console.log(data);
     setUser(null);
     toast.success("You are now logged in");
     reset();
+  };
+
+  const { performFetch } = useFetch("auth/login", onSuccess);
+
+  const onSubmit = async (data: FieldValues) => {
+    await performFetch({
+      method: "POST",
+      body: JSON.stringify(data),
+    });
   };
 
   return (

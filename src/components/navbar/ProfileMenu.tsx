@@ -28,7 +28,7 @@ export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
   return (
     <div>
       {visible ? (
-        <div className="w-24 absolute top-16 right-0 flex flex-col border-2 ">
+        <div className="bg-white w-24 z-50 absolute top-16 right-0 flex flex-col border-2 ">
           <div className="flex flex-col gap-3">
             <Button variant="ghost" asChild>
               <Link to="/profile">Profile</Link>

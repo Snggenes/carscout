@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 
+const authMiddleware = require("../authMiddleware");
+
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -66,6 +68,11 @@ router.get("/profile", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
+});
+
+router.get("/protected", authMiddleware, (req, res) => {
+  const user = req.user;
+  return res.json({ user });
 });
 
 module.exports = router;

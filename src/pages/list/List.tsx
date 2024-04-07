@@ -1,13 +1,21 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import useFetch from "@/hooks/useFetch";
 
 export default function List() {
   const { brand } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  function handleclick() {
-    setSearchParams({ model: "model", price: "price", year: "year" });
-  }
+  const onSuccess = (data: any) => {
+    console.log(data);
+  };
+
+  const { performFetch } = useFetch("cars", onSuccess);
+
+  useEffect(() => {
+    performFetch();
+  }, []);
 
   return (
     <div>
@@ -15,7 +23,7 @@ export default function List() {
       <p>{searchParams.get("model")}</p>
       <p>{searchParams.get("price")}</p>
       <p>{searchParams.get("year")}</p>
-      <button onClick={handleclick}>abc</button>
+      <button>abc</button>
     </div>
   );
 }
