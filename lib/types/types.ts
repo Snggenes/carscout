@@ -15,7 +15,7 @@ type address = {
       longitude: number
 }
 
-export type Car = {
+export type TCar = {
     _id: string;
     brand: string;
     model: string;
@@ -30,4 +30,5 @@ export type Car = {
     owner: string;
     power: string;
     address: address;
+    createdAt: Date;
 }

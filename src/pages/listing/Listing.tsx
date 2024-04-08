@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Car } from "../../../lib/types/types";
+import { TCar } from "../../../lib/types/types";
 import Map from "@/components/Map";
 
 import {
@@ -23,7 +23,7 @@ import useFetch from "@/hooks/useFetch";
 
 export default function Listing() {
   const { id } = useParams();
-  const [car, setCar] = useState<Car | null>(null);
+  const [car, setCar] = useState<TCar | null>(null);
   const [center, setCenter] = useState<[number, number]>();
 
   const onSuccess = (data: any) => {
@@ -39,40 +39,44 @@ export default function Listing() {
   }, [id]);
 
   return (
-    <div className="p-20 flex flex-row gap-8">
-      <Carousel className="w-full max-w-lg">
-        <CarouselContent>
-          {car?.image.map((image, index) => (
-            <CarouselItem key={index}>
-              <img src={image} alt="" />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-      <div className="mx-20">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {car?.brand} {car?.model}
-            </CardTitle>
-            <CardDescription>{car?.year}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>{car?.description}</CardDescription>
-          </CardContent>
-          <CardFooter>
-            <CardDescription>{car?.price}</CardDescription>
-          </CardFooter>
-        </Card>
+    <div className="p-20 flex flex-col gap-4 lg:gap-8">
+      <div className="flex flex-row gap-8">
+        <Carousel className="w-full max-w-lg">
+          <CarouselContent>
+            {car?.image.map((image: any, index: any) => (
+              <CarouselItem key={index}>
+                <img src={image} alt="" />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+        <div className="mx-20">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {car?.brand} {car?.model}
+              </CardTitle>
+              <CardDescription>{car?.year}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{car?.description}</CardDescription>
+            </CardContent>
+            <CardFooter>
+              <CardDescription>{car?.price}</CardDescription>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
-      {center && (
-        <Map
-          lat={Number(car?.address.latitude)}
-          lng={Number(car?.address.longitude)}
-        />
-      )}
+      <div>
+        {center && (
+          <Map
+            lat={Number(car?.address.latitude)}
+            lng={Number(car?.address.longitude)}
+          />
+        )}
+      </div>
     </div>
   );
 }

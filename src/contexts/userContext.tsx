@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { Loader } from "lucide-react";
 
 import type { User } from "../../lib/types/types";
+import useFetch from "@/hooks/useFetch";
 
 type UserContextType = {
   user: User | null;
@@ -18,22 +19,16 @@ export default function UserProvider({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/auth/profile", {
-        credentials: "include",
-      });
-      const data = await response.json();
-      setUser(data.user);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const onSuccess = (data: any) => {
+    setUser(data.user);
+    setLoading(false);
   };
+
+  const { performFetch } = useFetch("auth/profile", onSuccess);
 
   useEffect(() => {
     if (!user) {
-      fetchCurrentUser();
+      performFetch();
     }
   }, [user]);
 

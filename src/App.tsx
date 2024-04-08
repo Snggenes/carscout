@@ -28,7 +28,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/list/:brand" element={<List />} />
+            <Route path="/list" element={<List />} />
             <Route path="/advanced-search" element={<Search />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/listing-form" element={<ListingForm />} />

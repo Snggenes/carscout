@@ -16,7 +16,8 @@ export default function ListingForm() {
 
     return (
         <div>
-        <h1>Listing Form</h1>
+        <h1>Listing Form {searchParams.get("licencePlate")}</h1>
+        <h1>{searchParams.get("mileage")}</h1>
         </div>
     );
 }

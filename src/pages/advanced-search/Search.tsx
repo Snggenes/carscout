@@ -19,19 +19,25 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const FormSchema = z.object({
-  brand: z.string({
-    required_error: "Please select a brand.",
-  }),
+  brand: z.string().optional(),
   model: z.string().optional(),
-  price: z.string({
-    required_error: "Please select a price.",
-  }),
+  price: z.string().optional(),
   year: z.string().optional(),
   body: z.string().optional(),
   fuel: z.string().optional(),
 });
 
-export default function AdvancedSearch() {
+type Props = {
+  sidebar?: boolean;
+  searchParams?: URLSearchParams;
+  setSearchParams?: (params: any) => void;
+};
+
+export default function AdvancedSearch({
+  sidebar,
+  searchParams,
+  setSearchParams,
+}: Props) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -42,23 +48,38 @@ export default function AdvancedSearch() {
     : [];
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    if (sidebar && setSearchParams && searchParams) {
+      const existingParams = Object.fromEntries(searchParams.entries());
+      const updatedParams = { ...existingParams, abc: "abc" };
+      return setSearchParams(updatedParams);
+    }
     console.log(data);
   };
 
   return (
-    <div className=" w-screen px-4 lg:px-8 bg-white">
+    <div
+      className={
+        !sidebar ? `w-screen px-4 lg:px-8 bg-white` : `px-4 lg:px-8 bg-white`
+      }
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col w-full"
         >
-          <p className="p-6 text-3xl font-semibold">Basic data</p>
-          <div className="flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 lg:mb-8">
+          {!sidebar && <p className="p-6 text-3xl font-semibold">Basic data</p>}
+          <div
+            className={
+              !sidebar
+                ? `flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 lg:mb-8`
+                : ``
+            }
+          >
             <FormField
               control={form.control}
               name="brand"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -86,7 +107,7 @@ export default function AdvancedSearch() {
               control={form.control}
               name="model"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -112,12 +133,18 @@ export default function AdvancedSearch() {
             />
             <div className="w-1/3"></div>
           </div>
-          <div className="flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 mb-4 lg:mb-8">
+          <div
+            className={
+              !sidebar
+                ? `flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 lg:mb-8`
+                : ``
+            }
+          >
             <FormField
               control={form.control}
               name="fuel"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -145,7 +172,7 @@ export default function AdvancedSearch() {
               control={form.control}
               name="year"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -173,7 +200,7 @@ export default function AdvancedSearch() {
               control={form.control}
               name="body"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -198,12 +225,18 @@ export default function AdvancedSearch() {
               )}
             />
           </div>
-          <div className="flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 mb-4 lg:mb-8">
+          <div
+            className={
+              !sidebar
+                ? `flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 lg:mb-8`
+                : ``
+            }
+          >
             <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
-                <FormItem className="w-full md:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -233,12 +266,18 @@ export default function AdvancedSearch() {
             <div className="hidden md:block md:w-1/3"></div>
             <div className="hidden md:block md:w-1/3"></div>
           </div>
-          <div className="flex flex-col lg:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 mb-4 lg:mb-8">
+          <div
+            className={
+              !sidebar
+                ? `flex flex-col md:flex-row w-full justify-center gap-4 lg:gap-12 px-4 lg:px-12 lg:mb-8`
+                : ``
+            }
+          >
             <FormField
               control={form.control}
               name="fuel"
               render={({ field }) => (
-                <FormItem className="w-full lg:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -262,7 +301,7 @@ export default function AdvancedSearch() {
               control={form.control}
               name="year"
               render={({ field }) => (
-                <FormItem className="w-full lg:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -290,7 +329,7 @@ export default function AdvancedSearch() {
               control={form.control}
               name="body"
               render={({ field }) => (
-                <FormItem className="w-full lg:w-1/3">
+                <FormItem className={!sidebar ? `w-full md:w-1/3` : ``}>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -315,7 +354,11 @@ export default function AdvancedSearch() {
               )}
             />
           </div>
-          <Button type="submit" variant='destructive' className="fixed bottom-20 right-[50%] ">
+          <Button
+            type="submit"
+            variant="destructive"
+            className={!sidebar ? `fixed bottom-20 right-[50%]` : ``}
+          >
             Submit
           </Button>
         </form>
