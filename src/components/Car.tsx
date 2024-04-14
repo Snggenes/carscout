@@ -12,8 +12,6 @@ type Props = {
 };
 
 export function Car({ car }: Props) {
-  console.log(car);
-
   return (
     <div className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6 border">
       <div className="p-4 flex flex-col xl:flex-row xl:gap-8 xl:pl-8">

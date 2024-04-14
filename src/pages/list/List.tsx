@@ -10,14 +10,16 @@ import { type TCar } from "../../../lib/types/types";
 type Props = TCar[];
 
 export default function List() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [cars, setCars] = useState([] as any[]);
 
   const onSuccess = (data: Props) => {
     setCars(data);
   };
 
-  const { performFetch } = useFetch("cars", onSuccess);
+  const queryString = new URLSearchParams(searchParams).toString();
+
+  const { performFetch } = useFetch(`cars?${queryString}`, onSuccess);
 
   useEffect(() => {
     performFetch();
@@ -26,7 +28,7 @@ export default function List() {
   return (
     <div>
       <MobileHeader />
-      <Sidebar className="hidden lg:flex" />
+      <Sidebar className="hidden lg:flex" searchParams={searchParams} setSearchParams={setSearchParams}/>
       <div className="lg:pl-[256px] pt-[50px] lg:pt-0">
         <div className="max-w-[1256px] mx-auto lg:pt-6 h-full">
           {cars?.map((car) => (

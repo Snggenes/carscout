@@ -47,6 +47,7 @@ type FormSelectProps = {
   name: string;
   placeholder: string;
   defaultValues: any;
+  defaultValue?: any;
 };
 
 export function FormSelect({
@@ -54,7 +55,15 @@ export function FormSelect({
   name,
   placeholder,
   defaultValues,
+  defaultValue,
 }: FormSelectProps) {
+  
+  let fieldValue: any;
+  const keys = Object.keys(defaultValue);
+  if (keys.includes(name)) {
+    fieldValue = defaultValue[name];
+  }
+
   return (
     <>
       <FormField
@@ -62,7 +71,7 @@ export function FormSelect({
         name={name}
         render={({ field }) => (
           <FormItem>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange} defaultValue={fieldValue}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder={placeholder} />
@@ -83,4 +92,3 @@ export function FormSelect({
     </>
   );
 }
-
