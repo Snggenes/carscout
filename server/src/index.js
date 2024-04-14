@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const authRouter = require("./routes/auth");
 const carsRouter = require('./routes/cars')
@@ -12,6 +13,14 @@ const addressVerifyRouter = require("./routes/addressVerify");
 const distanceCalculationRouter = require("./routes/distanceCalculation");
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 30 * 1000,
+  max: 30,
+  message: "Too many requests from this IP, please try again after 30 seconds"
+});
+
+app.use(limiter);
 
 app.use(helmet());
 app.use(express.json());
