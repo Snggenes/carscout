@@ -3,13 +3,13 @@ import type { FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import { FormInput } from "@/components/form-elements";
 
 export default function Sell() {
   const navigate = useNavigate();
@@ -40,20 +40,21 @@ export default function Sell() {
             onSubmit={handleSubmit(onSubmit)}
             className="p-4 flex flex-col gap-2 w-[424px]"
           >
-            <Input
-              {...register("licencePlate", {
-                required: "Licence plate is required",
-              })}
-              type="text"
-              placeholder="Licence Plate"
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="licencePlate"
+              registerString="Licence Plate"
+              typeInput="text"
             />
-            {errors.licencePlate && <p>{`${errors.licencePlate.message}`}</p>}
-            <Input
-              {...register("mileage", { required: "Mileage is required" })}
-              type="text"
-              placeholder="Mileage"
+
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="mileage"
+              registerString="Mileage"
+              typeInput="number"
             />
-            {errors.mileage && <p>{`${errors.mileage.message}`}</p>}
 
             <Button variant="ghost" disabled={isSubmitting} className="mt-4">
               Next
@@ -61,7 +62,6 @@ export default function Sell() {
           </form>
         </CardContent>
       </Card>
-      
     </div>
   );
 }

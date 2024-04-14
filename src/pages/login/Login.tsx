@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useUser } from "../../contexts/userContext";
 import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
 import {
   Card,
   CardContent,
@@ -16,6 +15,7 @@ import {
 } from "../../../components/ui/card";
 import { toast } from "react-toastify";
 import useFetch from "@/hooks/useFetch";
+import { FormInput } from "@/components/form-elements";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -62,7 +62,21 @@ export default function Login() {
             onSubmit={handleSubmit(onSubmit)}
             className="p-4 flex flex-col gap-2 w-[424px]"
           >
-            <Input
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="email"
+              registerString="Email"
+              typeInput="email"
+            />
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="password"
+              registerString="Password"
+              typeInput="password"
+            />
+            {/* <Input
               {...register("email", { required: "Email is required" })}
               type="email"
               placeholder="Email"
@@ -73,7 +87,7 @@ export default function Login() {
               type="password"
               placeholder="Password"
             />
-            {errors.password && <p>{`${errors.password.message}`}</p>}
+            {errors.password && <p>{`${errors.password.message}`}</p>} */}
 
             <Button variant="ghost" disabled={isSubmitting}>
               Login

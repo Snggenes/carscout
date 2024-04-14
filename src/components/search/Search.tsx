@@ -1,18 +1,5 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select";
 import { Button } from "../../../components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "../../../components/ui/form";
+import { Form } from "../../../components/ui/form";
 import { useForm } from "react-hook-form";
 import { Car } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SaveQuery } from "./SaveQuery";
 import { ActualOffer } from "./ActualOffer";
+import { FormSelect } from "../form-elements";
 
 const FormSchema = z.object({
   brand: z.string({
@@ -39,6 +27,7 @@ export function Search() {
     resolver: zodResolver(FormSchema),
   });
 
+  const carDataBrands = carData.map((car) => car.brand);
   const selectedBrand = form.watch("brand");
   const selectedModel = selectedBrand
     ? carData.find((car) => car.brand === selectedBrand)?.models
@@ -70,118 +59,30 @@ export function Search() {
               onSubmit={form.handleSubmit(onSubmit)}
               className="p-6 gap-4 w-2/3 bg-white grid grid-cols-3"
             >
-              <FormField
+              <FormSelect
                 control={form.control}
                 name="brand"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Brand" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {carData.map((car) => (
-                          <SelectItem key={car.brand} value={car.brand}>
-                            {car.brand}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
+                placeholder="Brand"
+                defaultValues={carDataBrands}
               />
-              <FormField
+              <FormSelect
                 control={form.control}
                 name="model"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Model" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {selectedModel?.map((model) => (
-                          <SelectItem key={model} value={model}>
-                            {model}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
+                placeholder="Model"
+                defaultValues={selectedModel}
               />
-              <FormField
+              <FormSelect
                 control={form.control}
                 name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Price" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {prices.map((price) => {
-                          const priceString = price.toString();
-                          return (
-                            <SelectItem key={priceString} value={priceString}>
-                              {priceString}
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
+                placeholder="Price"
+                defaultValues={prices}
               />
-              <FormField
+              <FormSelect
                 control={form.control}
                 name="year"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Year" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {years.map((year) => (
-                          <SelectItem key={year} value={year}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
+                placeholder="Year"
+                defaultValues={years}
               />
-
               <Button type="submit" variant="ghost">
                 Submit
               </Button>

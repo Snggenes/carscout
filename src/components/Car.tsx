@@ -15,9 +15,9 @@ export function Car({ car }: Props) {
   console.log(car);
 
   return (
-    <div className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row gap-8 px-6">
-      <div className="p-4 flex flex-col xl:flex-row gap-8">
-        <Carousel className="w-full max-w-lg xl:mr-8">
+    <div className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6 border">
+      <div className="p-4 flex flex-col xl:flex-row xl:gap-8 xl:pl-8">
+        <Carousel className="w-full max-w-lg xl:mr-8 h-[350px]">
           <CarouselContent>
             {car?.image.map((image: any, index: any) => (
               <CarouselItem key={index}>
@@ -35,7 +35,7 @@ export function Car({ car }: Props) {
           <p className="text-lg font-semibold text-gray-800">€ {car?.price}</p>
           <hr />
           <div className="flex flex-row gap-2">
-            <p className="text-md font-light">{car?.km}</p>
+            <p className="text-md font-light">{car?.km}-km</p>
             <p className="text-md font-light">{car?.transmission}</p>
             <p className="text-md font-light">
               {car
@@ -45,7 +45,7 @@ export function Car({ car }: Props) {
                 : ""}
             </p>
             <p className="text-md font-light">{car?.fuel}</p>
-            <p className="text-md font-light">{car?.power}</p>
+            <p className="text-md font-light">{car?.power}-hp</p>
           </div>
         </div>
       </div>

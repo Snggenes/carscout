@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import { FormInput } from "@/components/form-elements";
 
 import useFetch from "@/hooks/useFetch";
 
@@ -65,24 +66,27 @@ export default function Register() {
             onSubmit={handleSubmit(onSubmit)}
             className="p-4 flex flex-col gap-2 w-[424px]"
           >
-            <Input
-              {...register("username", { required: "Username is required" })}
-              type="text"
-              placeholder="Username"
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="username"
+              registerString="Username"
             />
-            {errors.username && <p>{`${errors.username.message}`}</p>}
-            <Input
-              {...register("email", { required: "Email is required" })}
-              type="email"
-              placeholder="Email"
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="email"
+              registerString="Email"
+              typeInput="email"
             />
-            {errors.email && <p>{`${errors.email.message}`}</p>}
-            <Input
-              {...register("password", { required: "Password is required" })}
-              type="password"
-              placeholder="Password"
+            <FormInput
+              register={register}
+              errors={errors}
+              registerName="password"
+              registerString="Password"
+              typeInput="password"
             />
-            {errors.password && <p>{`${errors.password.message}`}</p>}
+            
             <Input
               {...register("confirmPassword", {
                 required: "Confirm Password is required",

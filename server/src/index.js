@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
+const helmet = require("helmet");
 
 const authRouter = require("./routes/auth");
 const carsRouter = require('./routes/cars')
@@ -12,6 +13,7 @@ const distanceCalculationRouter = require("./routes/distanceCalculation");
 
 const app = express();
 
+app.use(helmet());
 app.use(express.json());
 app.use(
   cors({

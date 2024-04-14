@@ -6,22 +6,14 @@ import {
 import { Sidebar } from "./Sidebar";
 import { Menu } from "lucide-react";
 
-type Props = {
-  searchParams: URLSearchParams;
-  setSearchParams: (params: any) => void;
-};
-
-export function MobileSidebar({ searchParams, setSearchParams }: Props) {
+export function MobileSidebar() {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu className="text-white" />
+        <Menu className=" text-slate-500" />
       </SheetTrigger>
       <SheetContent className="p-0 z-[100]" side="left">
-        <Sidebar
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
+        <Sidebar />
       </SheetContent>
     </Sheet>
   );
