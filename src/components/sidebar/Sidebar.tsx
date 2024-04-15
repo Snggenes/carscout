@@ -1,14 +1,25 @@
 import { cn } from "../../../lib/utils";
 import { Form } from "../../../components/ui/form";
 import { useForm } from "react-hook-form";
-import { carData, prices, years, body, fuel } from "../../../lib/data";
+import {
+  carData,
+  prices,
+  years,
+  body,
+  fuel,
+  km,
+  transmission,
+  power,
+  doors,
+  colors,
+} from "../../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSelect } from "../../components/form-elements";
 
 type Props = {
   className?: string;
-  setSearchParams: any;
+  setSearchParams?: any;
   searchParams?: any;
 };
 
@@ -57,7 +68,10 @@ export function Sidebar({ className, searchParams, setSearchParams }: Props) {
       )}
     >
       <Form {...form}>
-        <form className="flex flex-col w-full" onChange={handleFormChange()}>
+        <form
+          className="flex flex-col w-full gap-2 py-2"
+          onChange={handleFormChange()}
+        >
           <FormSelect
             control={form.control}
             name="brand"
@@ -98,6 +112,41 @@ export function Sidebar({ className, searchParams, setSearchParams }: Props) {
             name="fuel"
             placeholder="Fuel"
             defaultValues={fuel}
+            defaultValue={paramsObject}
+          />
+          <FormSelect
+            control={form.control}
+            name="km"
+            placeholder="Km"
+            defaultValues={km}
+            defaultValue={paramsObject}
+          />
+          <FormSelect
+            control={form.control}
+            name="transmission"
+            placeholder="Transmission"
+            defaultValues={transmission}
+            defaultValue={paramsObject}
+          />
+          <FormSelect
+            control={form.control}
+            name="power"
+            placeholder="Power"
+            defaultValues={power}
+            defaultValue={paramsObject}
+          />
+          <FormSelect
+            control={form.control}
+            name="door"
+            placeholder="Doors"
+            defaultValues={doors}
+            defaultValue={paramsObject}
+          />
+          <FormSelect
+            control={form.control}
+            name="color"
+            placeholder="Colors"
+            defaultValues={colors}
             defaultValue={paramsObject}
           />
         </form>

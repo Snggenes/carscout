@@ -1531,8 +1531,8 @@ export const prices = [
   "97000",
   "98000",
   "99000",
-  "100000"
-]
+  "100000",
+];
 
 export const years = [
   "2021",
@@ -1634,8 +1634,23 @@ export const years = [
   "1925",
   "1924",
   "1923",
-  "1922"
-]
+  "1922",
+];
+
+export const body = [
+  "Convertible",
+  "Coupe",
+  "Hatchback",
+  "Minivan",
+  "Pickup",
+  "Sedan",
+  "SUV",
+  "Truck",
+  "Van",
+  "Wagon",
+];
+
+export const fuel = ["Diesel", "Electric", "Hybrid", "Benzine"];
 
 export const km = [
   "1000",
@@ -1758,32 +1773,11 @@ export const km = [
   "280000",
   "290000",
   "300000",
-]
+];
 
-export const body = [
-  "Convertible",
-  "Coupe",
-  "Hatchback",
-  "Minivan",
-  "Pickup",
-  "Sedan",
-  "SUV",
-  "Truck",
-  "Van",
-  "Wagon",
-]
+export const transmission = ["Automatic", "Manual"];
 
-export const transmission = [
-  "Automatic",
-  "Manual",
-]
 
-export const fuel = [
-  "Diesel",
-  "Electric",
-  "Hybrid",
-  "Benzine"
-]
 
 export const power = [
   "50",
@@ -1882,26 +1876,9 @@ export const power = [
   "980",
   "990",
   "1000",
-]
+];
 
-export const doors = [
-  "2",
-  "3",
-  "4",
-  "5",
-]
-
-export const seats = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-]
+export const doors = ["2", "3", "4", "5"];
 
 export const colors = [
   "Black",
@@ -1917,4 +1894,5 @@ export const colors = [
   "Silver",
   "White",
   "Yellow",
-]
+];
+

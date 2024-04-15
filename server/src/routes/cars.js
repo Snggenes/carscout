@@ -30,8 +30,16 @@ router.get("/", async (req, res) => {
   const queryParams = req.query;
 
   if (Object.keys(queryParams).length > 0) {
+
+    const cacheKey = JSON.stringify(queryParams);
+    const cachedCars = cache.get(cacheKey);
+    if (cachedCars) {
+      return res.status(200).json(cachedCars);
+    }
+
     try {
       const cars = await CarModel.find(queryParams);
+      cache.set(cacheKey, cars, 180);
       return res.status(200).json(cars);
     } catch (error) {
       res.status(404).json({ message: error.message });

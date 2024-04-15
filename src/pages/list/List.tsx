@@ -1,37 +1,48 @@
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import useFetch from "@/hooks/useFetch";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { MobileHeader } from "@/components/sidebar/MobileHeader";
 
 import { Car } from "@/components/Car";
-import { type TCar } from "../../../lib/types/types";
 
-type Props = TCar[];
+import { useQuery } from "@tanstack/react-query";
+
 
 export default function List() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [cars, setCars] = useState([] as any[]);
-
-  const onSuccess = (data: Props) => {
-    setCars(data);
-  };
 
   const queryString = new URLSearchParams(searchParams).toString();
 
-  const { performFetch } = useFetch(`cars?${queryString}`, onSuccess);
+  const { isLoading, error, data: cars } = useQuery({
+    queryKey: ["cars", queryString],
+    queryFn: async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/cars?${queryString}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
 
-  useEffect(() => {
-    performFetch();
-  }, [searchParams]);
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
-      <MobileHeader />
-      <Sidebar className="hidden lg:flex" searchParams={searchParams} setSearchParams={setSearchParams}/>
+      <MobileHeader
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
+      <Sidebar
+        className="hidden lg:flex"
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
       <div className="lg:pl-[256px] pt-[50px] lg:pt-0">
         <div className="max-w-[1256px] mx-auto lg:pt-6 h-full">
-          {cars?.map((car) => (
+          {isLoading && <div>Loading...</div>}
+          {cars?.length === 0 && <div>No cars found</div>}
+          {cars?.map((car: any) => (
             <Car key={car._id} car={car} />
           ))}
         </div>
