@@ -18,9 +18,10 @@ export default function UserProvider({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log(user);
 
   const onSuccess = (data: any) => {
-    setUser(data.user);
+    setUser(data.safeUser);
     setLoading(false);
   };
 

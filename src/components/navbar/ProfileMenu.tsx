@@ -2,6 +2,7 @@ import { useUser } from "@/contexts/userContext";
 import { toast } from "react-toastify";
 import { Button } from "../../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import useFetch from "@/hooks/useFetch";
 
 type ProfileMenuProps = {
   visible: boolean;
@@ -12,17 +13,22 @@ export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
+  const onSuccess = (data: any) => {
+    if (data) {
+      setVisible(false);
+      toast.info("You are now logged out");
+      setUser(null);
+      navigate("/");
+    }
+  };
+
+  const { performFetch } = useFetch("auth/logout", onSuccess);
+
   const handleLogout = async () => {
-    const response = await fetch("http://localhost:4000/auth/logout", {
+    performFetch({
       method: "POST",
       credentials: "include",
     });
-    const data = await response.json();
-    console.log(data);
-    setVisible(false);
-    toast.info("You are now logged out");
-    setUser(null);
-    navigate("/");
   };
 
   return (

@@ -64,7 +64,8 @@ router.get("/profile", async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized email" });
     }
-    return res.json({ user });
+    const safeUser = { email: user.email, username: user.username, _id: user._id};
+    return res.json({ safeUser });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

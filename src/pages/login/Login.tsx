@@ -35,10 +35,11 @@ export default function Login() {
   } = useForm();
 
   const onSuccess = async (data: any) => {
-    console.log(data);
-    setUser(null);
-    toast.success("You are now logged in");
-    reset();
+    if (data) {
+      setUser(null);
+      toast.success("You are now logged in");
+      reset();
+    }
   };
 
   const { performFetch } = useFetch("auth/login", onSuccess);
