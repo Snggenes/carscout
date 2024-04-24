@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { Loader } from "lucide-react";
 
-import type { User } from "../../lib/types/types";
+import type { User } from "../lib/types/types";
 import useFetch from "@/hooks/useFetch";
 
 type UserContextType = {
@@ -18,7 +18,6 @@ export default function UserProvider({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log(user);
 
   const onSuccess = (data: any) => {
     setUser(data.safeUser);

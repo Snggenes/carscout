@@ -1516,6 +1516,17 @@ const seats = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const doors = [2, 3, 4, 5];
 
+const upholstery = [
+  "Cloth",
+  "Leather",
+  "Part Leather",
+  "Velour",
+  "Other",
+];
+
+const condition = ["New", "Used"];
+
+
 module.exports = {
   carData,
   prices,
@@ -1528,4 +1539,6 @@ module.exports = {
   colors,
   seats,
   doors,
+  upholstery,
+  condition,
 };

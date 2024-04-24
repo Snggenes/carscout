@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { Button } from "../../../components/ui/button";
+import { Button } from "../../components/ui/button";
 import { useUser } from "../../contexts/userContext";
-import { Avatar, AvatarImage } from "../../../components/ui/avatar";
+import { Avatar, AvatarImage } from "../../components/ui/avatar";
 import { BellRing } from "lucide-react";
 import { Star } from "lucide-react";
 import { ProfileMenu } from "./ProfileMenu";

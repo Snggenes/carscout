@@ -2,7 +2,7 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../components/ui/sheet";
+} from "../../components/ui/sheet";
 import { Sidebar } from "./Sidebar";
 import { Menu } from "lucide-react";
 

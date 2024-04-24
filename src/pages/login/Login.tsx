@@ -2,9 +2,12 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { Form } from "../../components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { useUser } from "../../contexts/userContext";
-import { Button } from "../../../components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,10 +15,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../../components/ui/card";
+} from "../../components/ui/card";
 import { toast } from "react-toastify";
 import useFetch from "@/hooks/useFetch";
 import { FormInput } from "@/components/form-elements";
+import { LoginFormSchema } from "../../lib/types/models";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -27,22 +31,24 @@ export default function Login() {
     }
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm();
-
   const onSuccess = async (data: any) => {
-    if (data) {
-      setUser(null);
-      toast.success("You are now logged in");
-      reset();
+    if (data.error) {
+      return toast.error(data.error);
     }
+    setUser(null);
+    toast.success(data.message);
+    form.reset();
   };
 
   const { performFetch } = useFetch("auth/login", onSuccess);
+
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const onSubmit = async (data: FieldValues) => {
     await performFetch({
@@ -59,41 +65,26 @@ export default function Login() {
           <CardDescription>Enter your credentials to login</CardDescription>
         </CardHeader>
         <CardContent>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="p-4 flex flex-col gap-2 w-[424px]"
-          >
-            <FormInput
-              register={register}
-              errors={errors}
-              registerName="email"
-              registerString="Email"
-              typeInput="email"
-            />
-            <FormInput
-              register={register}
-              errors={errors}
-              registerName="password"
-              registerString="Password"
-              typeInput="password"
-            />
-            {/* <Input
-              {...register("email", { required: "Email is required" })}
-              type="email"
-              placeholder="Email"
-            />
-            {errors.email && <p>{`${errors.email.message}`}</p>}
-            <Input
-              {...register("password", { required: "Password is required" })}
-              type="password"
-              placeholder="Password"
-            />
-            {errors.password && <p>{`${errors.password.message}`}</p>} */}
-
-            <Button variant="ghost" disabled={isSubmitting}>
-              Login
-            </Button>
-          </form>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="p-4 flex flex-col gap-2 w-[424px]"
+            >
+              <FormInput
+                control={form.control}
+                registerName="email"
+                registerString="Email"
+              />
+              <FormInput
+                control={form.control}
+                registerName="password"
+                registerString="Password"
+              />
+              <Button variant="ghost" disabled={form.formState.isSubmitting}>
+                Login
+              </Button>
+            </form>
+          </Form>
         </CardContent>
         <CardFooter className="flex flex-row items-center justify-center">
           <p>Don't have an account? </p>

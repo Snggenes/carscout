@@ -8,22 +8,22 @@ const dotenv = require("dotenv").config();
 const authMiddleware = require("../authMiddleware");
 
 router.post("/register", async (req, res) => {
+  const { username, email, password } = req.body;
+  const existingUser = await UserModel.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = new UserModel({
+    username,
+    email,
+    password: hashedPassword,
+  });
   try {
-    const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserModel({
-      username,
-      email,
-      password: hashedPassword,
-    });
-    try {
-      await user.save();
-      return res.status(201).json({ message: "User created" });
-    } catch (error) {
-      return res.status(400).json({ message: error.message });
-    }
+    await user.save();
+    return res.status(201).json({ message: "User created" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -32,11 +32,11 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
     const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
     return res
@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
       })
       .json({ message: "Logged in" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -64,7 +64,11 @@ router.get("/profile", async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized email" });
     }
-    const safeUser = { email: user.email, username: user.username, _id: user._id};
+    const safeUser = {
+      email: user.email,
+      username: user.username,
+      _id: user._id,
+    };
     return res.json({ safeUser });
   } catch (error) {
     return res.status(500).json({ message: error.message });

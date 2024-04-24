@@ -1,9 +1,9 @@
-import { Button } from "../../../components/ui/button";
-import { Form } from "../../../components/ui/form";
+import { Button } from "../../components/ui/button";
+import { Form } from "../../components/ui/form";
 import { useForm } from "react-hook-form";
 import { Car } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { carData, prices, years } from "../../../lib/data";
+import { carData, prices, years } from "../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 

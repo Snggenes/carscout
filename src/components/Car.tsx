@@ -1,11 +1,11 @@
-import { type TCar } from "../../lib/types/types";
+import { type TCar } from "../lib/types/types";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../components/ui/carousel";
+} from "../components/ui/carousel";
 
 type Props = {
   car: TCar;

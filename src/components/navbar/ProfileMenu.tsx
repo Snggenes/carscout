@@ -1,6 +1,6 @@
 import { useUser } from "@/contexts/userContext";
 import { toast } from "react-toastify";
-import { Button } from "../../../components/ui/button";
+import { Button } from "../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "@/hooks/useFetch";
 

@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { Button } from "../../../components/ui/button";
+import { Button } from "../../components/ui/button";
 import { Car } from "lucide-react";
 
 type SaveQueryProps = {

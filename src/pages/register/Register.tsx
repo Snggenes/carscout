@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { RegisterFormSchema } from "../../lib/types/models";
+import { Form } from "../../components/ui/form";
 
 import { useUser } from "../../contexts/userContext";
-import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,7 +17,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../../components/ui/card";
+} from "../../components/ui/card";
 import { FormInput } from "@/components/form-elements";
 
 import useFetch from "@/hooks/useFetch";
@@ -30,19 +33,13 @@ export default function Register() {
     }
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    getValues,
-  } = useForm();
-
   const onSuccess = async (data: any) => {
-    console.log(data);
-    toast.success("You are now registered");
+    if (data.error) {
+      return toast.error(data.error);
+    }
+    toast.success(data.message);
     navigate("/login");
-    reset();
+    form.reset();
   };
 
   const { performFetch } = useFetch("auth/register", onSuccess);
@@ -54,6 +51,15 @@ export default function Register() {
     });
   };
 
+  const form = useForm<z.infer<typeof RegisterFormSchema>>({
+    resolver: zodResolver(RegisterFormSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+
   return (
     <div className="flex flex-col items-center gap-2 md:gap-8 lg:gap-14">
       <Card>
@@ -63,43 +69,27 @@ export default function Register() {
         </CardHeader>
         <CardContent>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="p-4 flex flex-col gap-2 w-[424px]"
           >
-            <FormInput
-              register={register}
-              errors={errors}
-              registerName="username"
-              registerString="Username"
-            />
-            <FormInput
-              register={register}
-              errors={errors}
-              registerName="email"
-              registerString="Email"
-              typeInput="email"
-            />
-            <FormInput
-              register={register}
-              errors={errors}
-              registerName="password"
-              registerString="Password"
-              typeInput="password"
-            />
-            
-            <Input
-              {...register("confirmPassword", {
-                required: "Confirm Password is required",
-                validate: (value) =>
-                  value === getValues("password") || "Passwords do not match",
-              })}
-              type="password"
-              placeholder="Confirm Password"
-            />
-            {errors.confirmPassword && (
-              <p>{`${errors.confirmPassword.message}`}</p>
-            )}
-            <Button variant="ghost" disabled={isSubmitting}>
+            <Form {...form}>
+              <FormInput
+                control={form.control}
+                registerName="username"
+                registerString="Username"
+              />
+              <FormInput
+                control={form.control}
+                registerName="email"
+                registerString="Email"
+              />
+              <FormInput
+                control={form.control}
+                registerName="password"
+                registerString="Password"
+              />
+            </Form>
+            <Button variant="ghost" disabled={form.formState.isSubmitting}>
               Register
             </Button>
           </form>

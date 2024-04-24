@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { TCar } from "../../../lib/types/types";
+import { TCar } from "../../lib/types/types";
 import Map from "@/components/Map";
 
 import {
@@ -9,7 +9,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../../components/ui/carousel";
+} from "../../components/ui/carousel";
 import {
   Card,
   CardHeader,
@@ -17,7 +17,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "../../../components/ui/card";
+} from "../../components/ui/card";
 
 import useFetch from "@/hooks/useFetch";
 

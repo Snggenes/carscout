@@ -11,6 +11,8 @@ const {
   colors,
   seats,
   doors,
+  upholstery,
+  condition,
 } = require("../../data.js");
 
 const brands = carData.map((car) => car.brand);
@@ -28,8 +30,10 @@ const carSchema = new mongoose.Schema({
   seat: { type: Number, required: true, enum: seats },
   door: { type: Number, required: true, enum: doors },
   body: { type: String, required: true, enum: body },
+  condition: { type: String, required: true, enum: condition },
   transmission: { type: String, required: true, enum: transmission },
   fuel: { type: String, required: true, enum: fuel },
+  upholstery: { type: String, required: true, enum: upholstery },
   image: [{ type: String, default: [] }],
   description: { type: String },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

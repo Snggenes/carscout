@@ -1,46 +1,61 @@
-import { Input } from "../../components/ui/input";
+import { Input } from "../components/ui/input";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../components/ui/form";
+} from "../components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "../components/ui/select";
 
-type FormInputProps = {
-  register: any;
-  errors: any;
-  registerName: string;
-  registerString: string;
-  typeInput?: string;
-};
+// type FormInputProps = {
+//   register: any;
+//   errors: any;
+//   registerName: string;
+//   registerString: string;
+//   typeInput?: string;
+//   minLenght?: number;
+//   maxLength?: number;
+//   disabled?: boolean;
+// };
 
-export function FormInput({
-  register,
-  errors,
-  registerName,
-  registerString,
-  typeInput,
-}: FormInputProps) {
-  return (
-    <>
-      <Input
-        {...register(registerName, {
-          required: `${registerString} is required`,
-        })}
-        type={typeInput ? typeInput : "text"}
-        placeholder={registerString}
-      />
-      {errors[registerName] && <p>{errors[registerName].message}</p>}
-    </>
-  );
-}
+// export function FormInput({
+//   register,
+//   errors,
+//   registerName,
+//   registerString,
+//   typeInput,
+//   minLenght,
+//   maxLength,
+//   disabled,
+// }: FormInputProps) {
+//   return (
+//     <>
+//       <Input
+//         {...register(registerName, {
+//           required: `${registerString} is required`,
+//           minLength: {
+//             value: minLenght ? minLenght : 2,
+//             message: `${registerString} should have at least ${minLenght? minLenght : 2} characters`,
+//           },
+//           maxLength: {
+//             value: maxLength ? maxLength : 50,
+//             message: `${registerString} should have at most ${maxLength} characters`,
+//           },
+//         })}
+//         type={typeInput ? typeInput : "text"}
+//         disabled={disabled}
+//         placeholder={registerString}
+//       />
+//       {errors[registerName] && <p>{errors[registerName].message}</p>}
+//     </>
+//   );
+// }
 
 type FormSelectProps = {
   control: any;
@@ -55,17 +70,7 @@ export function FormSelect({
   name,
   placeholder,
   defaultValues,
-  defaultValue,
 }: FormSelectProps) {
-  let fieldValue: any;
-  let keys: any;
-  if (defaultValue) {
-    keys = Object.keys(defaultValue);
-    if (keys.includes(name)) {
-      fieldValue = defaultValue[name];
-    }
-  }
-
   return (
     <>
       <FormField
@@ -73,10 +78,7 @@ export function FormSelect({
         name={name}
         render={({ field }) => (
           <FormItem>
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={fieldValue ? fieldValue : field.value}
-            >
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder={placeholder} />
@@ -90,6 +92,32 @@ export function FormSelect({
                 ))}
               </SelectContent>
             </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
+}
+
+type FormInputProps = {
+  control: any;
+  registerName: string;
+  registerString: string;
+};
+
+
+export function FormInput({ control, registerName, registerString }: FormInputProps) {
+  return (
+    <>
+      <FormField
+        control={control}
+        name={registerName}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input placeholder={registerString} {...field} />
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}

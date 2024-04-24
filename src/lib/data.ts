@@ -1895,4 +1895,24 @@ export const colors = [
   "White",
   "Yellow",
 ];
+export const seats = [
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+];
 
+export const upholstery = [
+  "Cloth",
+  "Leather",
+  "Part Leather",
+  "Velour",
+  "Other",
+];
+
+export const condition = ["New", "Used"];

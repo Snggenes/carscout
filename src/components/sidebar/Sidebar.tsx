@@ -1,6 +1,10 @@
-import { cn } from "../../../lib/utils";
-import { Form } from "../../../components/ui/form";
+import { cn } from "../../lib/utils";
+import { z } from "zod";
+import { Form } from "../../components/ui/form";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { FormSelect } from "../../components/form-elements";
 import {
   carData,
   prices,
@@ -12,10 +16,7 @@ import {
   power,
   doors,
   colors,
-} from "../../../lib/data";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSelect } from "../../components/form-elements";
+} from "../../lib/data";
 
 type Props = {
   className?: string;
@@ -30,17 +31,30 @@ const FormSchema = z.object({
   year: z.string().optional(),
   body: z.string().optional(),
   fuel: z.string().optional(),
+  km: z.string().optional(),
+  transmission: z.string().optional(),
+  power: z.string().optional(),
+  door: z.string().optional(),
+  color: z.string().optional(),
 });
 
 export function Sidebar({ className, searchParams, setSearchParams }: Props) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      brand: searchParams.get("brand") || "",
+      model: searchParams.get("model") || "",
+      price: searchParams.get("price") || "",
+      year: searchParams.get("year") || "",
+      body: searchParams.get("body") || "",
+      fuel: searchParams.get("fuel") || "",
+      km: searchParams.get("km") || "",
+      transmission: searchParams.get("transmission") || "",
+      power: searchParams.get("power") || "",
+      door: searchParams.get("door") || "",
+      color: searchParams.get("color") || "",
+    },
   });
-
-  const paramsObject: any = {};
-  for (const [key, value] of searchParams.entries()) {
-    paramsObject[key] = value;
-  }
 
   const carDataBrands = carData.map((car) => car.brand);
   const selectedBrand = form.watch("brand");
@@ -54,7 +68,6 @@ export function Sidebar({ className, searchParams, setSearchParams }: Props) {
         Object.entries(form.getValues()).filter(([_, value]) => value)
       );
       setSearchParams(() => ({
-        ...paramsObject,
         ...nonEmptyValues,
       }));
     });
@@ -77,77 +90,66 @@ export function Sidebar({ className, searchParams, setSearchParams }: Props) {
             name="brand"
             placeholder="Brand"
             defaultValues={carDataBrands}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="model"
             placeholder="Model"
             defaultValues={selectedModel}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="price"
             placeholder="Price"
             defaultValues={prices}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="year"
             placeholder="Year"
             defaultValues={years}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="body"
             placeholder="Body"
             defaultValues={body}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="fuel"
             placeholder="Fuel"
             defaultValues={fuel}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="km"
             placeholder="Km"
             defaultValues={km}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="transmission"
             placeholder="Transmission"
             defaultValues={transmission}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="power"
             placeholder="Power"
             defaultValues={power}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="door"
             placeholder="Doors"
             defaultValues={doors}
-            defaultValue={paramsObject}
           />
           <FormSelect
             control={form.control}
             name="color"
             placeholder="Colors"
             defaultValues={colors}
-            defaultValue={paramsObject}
           />
         </form>
       </Form>
