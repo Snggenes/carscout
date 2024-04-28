@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# CarScout
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CarScout is a web application aimed at providing users with a platform to buy and sell vehicles, similar to AutoScout24. This project utilizes React with TypeScript for the frontend, Zustand for state management, and Tailwind CSS along with shadcn UI for styling. Node.js with Express.js is used for the backend.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication**: Allow users to sign up, log in, and manage their accounts securely.
+- **Vehicle Listings**: Enable users to list their vehicles for sale with detailed information and images.
+- **Search and Filter**: Provide users with robust search and filtering options to find the perfect vehicle.
+- **Responsive Design**: Ensure the application is accessible and functional across various devices and screen sizes.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Frontend**:
+  - React with TypeScript
+  - Zustand (for state management)
+  - Tailwind CSS (CSS framework)
+  - shadcn UI (for component library)
+- **Backend**:
+  - Node.js
+  - Express.js
+  - MongoDB (Mongoose) for database
+- **Authentication**:
+  - JSON Web Tokens (JWT) for authentication
+  - bcrypt.js for password hashing
