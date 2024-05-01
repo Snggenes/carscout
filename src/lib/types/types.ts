@@ -4,7 +4,7 @@ export type User = {
   _id: string;
 };
 
-type address = {
+export type Taddress = {
   city: string;
   street: string;
   house_number: string;
@@ -12,6 +12,7 @@ type address = {
   province: string;
   latitude: number;
   longitude: number;
+  error?: string;
 };
 
 export type TCar = {
@@ -33,5 +34,5 @@ export type TCar = {
   description?: string;
   owner: string;
   createdAt: Date;
-  address: address;
+  address: Taddress;
 };

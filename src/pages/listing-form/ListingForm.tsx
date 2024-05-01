@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { z } from "zod";
 import { Form } from "../../components/ui/form";
 import { useForm } from "react-hook-form";
@@ -20,6 +22,8 @@ import {
   years,
   fuel,
   prices,
+  transmission,
+  power,
 } from "../../lib/data";
 import { FormSelect, FormInput } from "../../components/form-elements";
 import { Button } from "../../components/ui/button";
@@ -32,6 +36,7 @@ import { toast } from "react-toastify";
 export default function ListingForm() {
   const [searchParams] = useSearchParams();
   const [image, setImage] = useState([]);
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -60,11 +65,29 @@ export default function ListingForm() {
     ? carData.find((car) => car.brand === selectedBrand)?.models
     : [];
 
-  const handleFormSubmit = form.handleSubmit((data) => {
-    if (image.length === 0) {
-      return toast.error("Please fill in all the fields");
-    }
-    console.log({ ...data, image });
+
+  const { mutate } = useMutation({
+    mutationFn: form.handleSubmit(async (data) => {
+      if (image.length === 0) {
+        return toast.error("Please fill in all the fields");
+      }
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/cars`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data, image }),
+      });
+      const newCar = await res.json();
+      if (newCar.error) {
+        return toast.error(newCar.error);
+      }
+      toast.success("Car added successfully");
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["cars"]})
+      navigate("/sell");
+    },
   });
 
   return (
@@ -76,7 +99,7 @@ export default function ListingForm() {
 
         <div className="bg-white flex-1 p-4 border rounded-md">
           <Form {...form}>
-            <form onSubmit={handleFormSubmit} className="w-2/3 space-y-8">
+            <form onSubmit={mutate} className="w-2/3 space-y-8">
               <div id="1" className="space-y-4">
                 <CardTitle className="mb-6">Car Details</CardTitle>
                 <div>
@@ -155,7 +178,21 @@ export default function ListingForm() {
                   />
                 </div>
               </div>
-
+              <div id="1" className="space-y-4 border-b">
+                <CardTitle className="mb-6">Transmission</CardTitle>
+                <FormSelect
+                  control={form.control}
+                  name="transmission"
+                  placeholder="Transmission"
+                  defaultValues={transmission}
+                />
+                <FormSelect
+                  control={form.control}
+                  name="power"
+                  placeholder="Power"
+                  defaultValues={power}
+                />
+              </div>
               <div id="1" className="space-y-4 border-b">
                 <CardTitle className="mb-6">Condition of the car</CardTitle>
                 <div>

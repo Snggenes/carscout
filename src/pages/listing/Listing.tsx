@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { TCar } from "../../lib/types/types";
 import Map from "@/components/Map";
@@ -19,24 +19,26 @@ import {
   CardContent,
 } from "../../components/ui/card";
 
-import useFetch from "@/hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Listing() {
   const { id } = useParams();
-  const [car, setCar] = useState<TCar | null>(null);
   const [center, setCenter] = useState<[number, number]>();
 
-  const onSuccess = (data: any) => {
-    console.log(data);
-    setCar(data);
-    setCenter([data.address.latitude, data.address.longitude]);
-  };
+  const { data: car, isLoading, error } = useQuery<TCar>({
+    queryKey: ["car", id],
+    queryFn: async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/cars?id=${id}`
+      );
+      const data = await response.json();
+      setCenter([data.address.latitude, data.address.longitude]);
+      return data;
+    },
+  });
 
-  const { performFetch } = useFetch(`cars?id=${id}`, onSuccess);
-
-  useEffect(() => {
-    performFetch();
-  }, [id]);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error...</div>;
 
   return (
     <div className="p-20 flex flex-col gap-4 lg:gap-8">

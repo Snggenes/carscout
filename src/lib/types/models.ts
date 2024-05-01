@@ -14,12 +14,19 @@ export const ListingFormSchema = z.object({
   year: z.string({ required_error: "Year is required" }),
   fuel: z.string({ required_error: "Fuel is required" }),
   price: z.string({ required_error: "Price is required" }),
-  phone: z.string().min(10, { message: "Phone number should have at least 10 characters" }),
-  postcode: z.string().min(6, { message: "Postcode should have at least 4 characters" }),
-  houseNumber: z.string().min(1, { message: "House number should have at least 1 character" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number should have at least 10 characters" }),
+  postcode: z
+    .string()
+    .min(6, { message: "Postcode should have at least 6 characters" }),
+  houseNumber: z
+    .string()
+    .min(1, { message: "House number should have at least 1 character" }),
   description: z.string().optional(),
+  transmission: z.string({ required_error: "Transmission is required" }),
+  power: z.string({ required_error: "Power is required" }),
 });
-
 
 export const LoginFormSchema = z.object({
   email: z.string({ required_error: "Email is required" }),
