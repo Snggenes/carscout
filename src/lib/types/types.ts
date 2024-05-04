@@ -2,6 +2,8 @@ export type User = {
   username: string;
   email: string;
   _id: string;
+  cars: string[];
+  favorites: string[];
 };
 
 export type Taddress = {
@@ -29,6 +31,7 @@ export type TCar = {
   door: number;
   body: string;
   transmission: string;
+  condition: string;
   fuel: string;
   image: [string];
   description?: string;

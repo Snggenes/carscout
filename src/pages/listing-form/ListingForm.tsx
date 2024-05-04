@@ -76,13 +76,14 @@ export default function ListingForm() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ ...data, image }),
       });
       const newCar = await res.json();
       if (newCar.error) {
         return toast.error(newCar.error);
       }
-      toast.success("Car added successfully");
+      toast.success(newCar.message);
     }),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["cars"]})

@@ -14,9 +14,20 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { FormInput } from "@/components/form-elements";
+import { useUser } from "../../contexts/userContext";
+import { useEffect } from "react";
 
 export default function Sell() {
+  const { user } = useUser();
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (!user?.username) {
+      toast.error("You need to be logged in to access this page");
+      navigate("/login");
+    }
+  }, []);
 
   const onSubmit = async (data: FieldValues) => {
     toast(JSON.stringify(data));
