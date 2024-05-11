@@ -5,6 +5,8 @@ import {Car} from "../../components/Car"
 import { useQuery } from "@tanstack/react-query";
 import { TCar } from "../../lib/types/types";
 
+import Loading from "../../components/Loading";
+
 export default function Favorites() {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -28,7 +30,7 @@ export default function Favorites() {
   });
 
     if (isLoading) {
-        return <h1>Loading...</h1>;
+        return <Loading />;
     }
 
     if (isError) {

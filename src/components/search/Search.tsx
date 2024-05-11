@@ -7,9 +7,9 @@ import { carData, prices, years } from "../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { SaveQuery } from "./SaveQuery";
-import { ActualOffer } from "./ActualOffer";
 import { FormSelect } from "../form-elements";
+
+import { useStore } from "../../contexts/store";
 
 const FormSchema = z.object({
   brand: z.string({
@@ -22,6 +22,7 @@ const FormSchema = z.object({
 
 export function Search() {
   const navigate = useNavigate();
+  const store = useStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -34,65 +35,56 @@ export function Search() {
     : [];
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const queries = new URLSearchParams();
-    if (data.brand) queries.set("brand", data.brand);
-    if (data.model) queries.set("model", data.model);
-    if (data.price) queries.set("price", data.price);
-    if (data.year) queries.set("year", data.year);
-    navigate(`/list?${queries.toString()}`);
-  }
-
-  function getInfoForQuery() {
-    const data = form.getValues();
-    return data;
+    const params = new URLSearchParams();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      }
+    });
+    store.setParams(params);
+    navigate(`/list?${params.toString()}`);
   }
 
   return (
-    <div className="w-full flex flex-col items-center justify-center">
-      <div className="relative w-full h-[560px] xl:h-[680px] bg-[url('/main.webp')] bg-cover bg-no-repeat bg-center">
-        <div className="absolute mt-4 bottom-10 ml-4 md:ml-16 w-full">
-          <div className="w-12 h-8 bg-white flex flex-row items-center justify-center rounded-t-lg">
-            <Car size={30} />
-          </div>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="p-6 gap-4 w-2/3 bg-white grid grid-cols-3"
-            >
-              <FormSelect
-                control={form.control}
-                name="brand"
-                placeholder="Brand"
-                defaultValues={carDataBrands}
-              />
-              <FormSelect
-                control={form.control}
-                name="model"
-                placeholder="Model"
-                defaultValues={selectedModel}
-              />
-              <FormSelect
-                control={form.control}
-                name="price"
-                placeholder="Price"
-                defaultValues={prices}
-              />
-              <FormSelect
-                control={form.control}
-                name="year"
-                placeholder="Year"
-                defaultValues={years}
-              />
-              <Button type="submit" variant="ghost">
-                Submit
-              </Button>
-            </form>
-          </Form>
+    <div className="relative w-full h-[220px] sm:h-[290px] md:h-[460px] xl:h-[520px] bg-[url('/main.webp')] bg-cover bg-center bg-no-repeat">
+      <div className={`max-w-[1200px] hidden md:block absolute mt-4 bottom-10 px-4 md:xl-16 w-full`}>
+        <div className="w-12 h-8 bg-white flex flex-row items-center justify-center rounded-t-lg">
+          <Car size={30} />
         </div>
-      </div>
-      <div className="w-full mt-6 lg:mt-12 max-w-[1400px] flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8">
-        <SaveQuery getInfoForQuery={getInfoForQuery} />
-        <ActualOffer />
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="p-6 gap-4 w-full lg:w-5/6 bg-white grid grid-cols-3"
+          >
+            <FormSelect
+              control={form.control}
+              name="brand"
+              placeholder="Brand"
+              defaultValues={carDataBrands}
+            />
+            <FormSelect
+              control={form.control}
+              name="model"
+              placeholder="Model"
+              defaultValues={selectedModel}
+            />
+            <FormSelect
+              control={form.control}
+              name="price"
+              placeholder="Price"
+              defaultValues={prices}
+            />
+            <FormSelect
+              control={form.control}
+              name="year"
+              placeholder="Year"
+              defaultValues={years}
+            />
+            <Button type="submit" variant="ghost">
+              Submit
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );

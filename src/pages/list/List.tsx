@@ -3,6 +3,7 @@ import { Sidebar } from "@/components/sidebar/Sidebar";
 import { MobileHeader } from "@/components/sidebar/MobileHeader";
 
 import { Car } from "@/components/Car";
+import Loading from "../../components/Loading"
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -40,7 +41,7 @@ export default function List() {
       />
       <div className="lg:pl-[256px] pt-[50px] lg:pt-0">
         <div className="max-w-[1256px] mx-auto lg:pt-6 h-full">
-          {isLoading && <div>Loading...</div>}
+          {isLoading && <Loading />}
           {cars?.length === 0 && <div>No cars found</div>}
           {cars?.map((car: any) => (
             <Car key={car._id} car={car} />

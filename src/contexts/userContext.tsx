@@ -1,6 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { Loader } from "lucide-react";
-
+import Loading from "../components/Loading"
 import type { User } from "../lib/types/types";
 import useFetch from "@/hooks/useFetch";
 
@@ -35,9 +34,7 @@ export default function UserProvider({
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
-          <Loader size="2rem" />
-        </div>
+        <Loading />
       ) : (
         children
       )}

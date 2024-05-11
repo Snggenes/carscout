@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Form } from "../../components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -24,10 +24,15 @@ import { LoginFormSchema } from "../../lib/types/models";
 export default function Login() {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (user?.username) {
-      navigate("/");
+      if (location.state) {
+        navigate(location.state.from);
+      } else {
+        navigate("/");
+      }
     }
   });
 

@@ -8,7 +8,12 @@ import { Star } from "lucide-react";
 import { ProfileMenu } from "./ProfileMenu";
 import { useState } from "react";
 
+import { useNavigate, useLocation } from "react-router-dom";
+
 export function NavProfile() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { user } = useUser();
   const [visible, setVisible] = useState(false);
 
@@ -32,7 +37,7 @@ export function NavProfile() {
               onClick={() => setVisible((prev) => !prev)}
             />
           </Avatar>
-          <ProfileMenu visible={visible} setVisible={setVisible}/>
+          <ProfileMenu visible={visible} setVisible={setVisible} />
         </div>
       </div>
     );
@@ -40,8 +45,17 @@ export function NavProfile() {
 
   return (
     <div>
-      <Button variant="ghost" asChild>
-        <Link to="/login">Sign In</Link>
+      <Button
+        variant="ghost"
+        onClick={() => {
+          navigate("/login", {
+            state: {
+              from: location.pathname,
+            },
+          });
+        }}
+      >
+        Sign In
       </Button>
       <Button variant="ghost" asChild>
         <Link to="/register">Sign Up</Link>

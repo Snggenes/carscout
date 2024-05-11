@@ -18,7 +18,7 @@ import Search from "./pages/advanced-search/Search";
 export default function App() {
   return (
     <div className="">
-      <ToastContainer position="top-center" />
+      <ToastContainer position="bottom-left" autoClose={1500} hideProgressBar/>
       <Router>
         <Navbar />
         <div className="pt-16">

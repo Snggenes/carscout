@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,12 +20,16 @@ import { useEffect } from "react";
 export default function Sell() {
   const { user } = useUser();
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   useEffect(() => {
     if (!user?.username) {
       toast.error("You need to be logged in to access this page");
-      navigate("/login");
+      navigate("/login", {
+        state: {
+          from: location.pathname,
+        },
+      });
     }
   }, []);
 
@@ -55,10 +59,10 @@ export default function Sell() {
         <CardContent>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="p-4 flex flex-col gap-2 w-[424px]"
+            className="p-4 flex flex-col gap-2 w-[424px] h-[250px] xl:h-[300px]"
           >
             <Form {...form}>
-              <FormInput 
+              <FormInput
                 control={form.control}
                 registerName="licencePlate"
                 registerString="Licence Plate"
@@ -70,7 +74,11 @@ export default function Sell() {
               />
             </Form>
 
-            <Button variant="ghost" disabled={form.formState.isSubmitting} className="mt-4">
+            <Button
+              variant="ghost"
+              disabled={form.formState.isSubmitting}
+              className="mt-4"
+            >
               Next
             </Button>
           </form>
