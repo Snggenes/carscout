@@ -104,10 +104,11 @@ type FormInputProps = {
   control: any;
   registerName: string;
   registerString: string;
+  typeInput?: string;
 };
 
 
-export function FormInput({ control, registerName, registerString }: FormInputProps) {
+export function FormInput({ control, registerName, registerString, typeInput }: FormInputProps) {
   return (
     <>
       <FormField
@@ -116,7 +117,7 @@ export function FormInput({ control, registerName, registerString }: FormInputPr
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input placeholder={registerString} {...field} />
+              <Input type={typeInput || "text"} placeholder={registerString} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

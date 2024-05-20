@@ -1,6 +1,8 @@
 import { Search } from "../../components/search/Search";
 import { SaveQuery } from "../../components/SaveQuery";
 import { ActualOffer } from "../../components/ActualOffer";
+import { LastAddedCars } from "../../components/LastAddedCars";
+
 
 export default function Home() {
   return (
@@ -10,6 +12,7 @@ export default function Home() {
         <SaveQuery />
         <ActualOffer />
       </div>
+      <LastAddedCars />
       <div className="h-[540px]"></div>
     </div>
   );

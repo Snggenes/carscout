@@ -8,53 +8,97 @@ import {
 } from "../components/ui/carousel";
 
 import { useNavigate } from "react-router-dom";
-import Heart from "./Heart"
+import Heart from "./Heart";
+
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from "./ui/card";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 type Props = {
   car: TCar;
+  className?: string;
 };
 
-export function Car({ car }: Props) {
+export function Car({ car, className }: Props) {
+  const [hasClicked, setHasClicked] = useState(false);
   const navigate = useNavigate();
+
+  const clickedCars = JSON.parse(localStorage.getItem("clickedCars") || "[]");
+
+  useEffect(() => {
+    if (clickedCars.includes(car._id)) {
+      setHasClicked(true);
+    }
+  }, []);
+  console.log(clickedCars);
+  console.log(hasClicked);
+
+  const handleViewClick = async () => {
+    if (hasClicked) {
+      return navigate(`/listing/${car._id}`);
+    }
+    const newClickedCars = [...clickedCars, car._id];
+    localStorage.setItem("clickedCars", JSON.stringify(newClickedCars));
+    setHasClicked(true);
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/cars/counter`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: car._id }),
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    navigate(`/listing/${car._id}`);
+  };
   return (
-    <div className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6 border">
-      <div className="p-4 flex flex-col xl:flex-row xl:gap-8 xl:pl-8">
-        <Carousel className="w-full max-w-lg xl:mr-8 cursor-pointer">
-          <CarouselContent>
-            {car?.image.map((image: any, index: any) => (
-              <CarouselItem key={index}>
-                <img
-                  src={image}
-                  alt=""
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-2"/>
-          <CarouselNext className="right-2"/>
-        </Carousel>
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-semibold" onClick={()=>{navigate(`/listing/${car._id}`)}}>
+    <div className={cn(`border p-2 ` + className)}>
+      <Carousel className="w-full max-w-lg xl:mr-8 cursor-pointer">
+        <CarouselContent>
+          {car?.image.map((image: any, index: any) => (
+            <CarouselItem key={index}>
+              <img src={image} alt="" />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-2" />
+        <CarouselNext className="right-2" />
+      </Carousel>
+      <Card className="w-full max-w-lg border-none">
+        <CardHeader>
+          <CardTitle>
             {car?.brand} {car?.model}
-          </h1>
-          <p className="text-lg font-semibold text-gray-800">€ {car?.price}</p>
-          <hr />
-          <div className="flex flex-row gap-2">
-            <p className="text-md font-light">{car?.km}-km</p>
-            <p className="text-md font-light">{car?.transmission}</p>
-            <p className="text-md font-light">
-              {car
-                ? `${new Date(car.createdAt).getMonth() + 1}/${new Date(
-                    car.createdAt
-                  ).getFullYear()}`
-                : ""}
-            </p>
-            <p className="text-md font-light">{car?.fuel}</p>
-            <p className="text-md font-light">{car?.power}-hp</p>
-            <p><Heart car={car}/></p>
-          </div>
-        </div>
-      </div>
+          </CardTitle>
+          <CardDescription>€ {car?.price}</CardDescription>
+          <CardDescription>
+            {car?.km}km | {car?.transmission} | {car?.year}
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="flex justify-between py-1">
+          <CardDescription>{car?.address.city}</CardDescription>
+          <Heart car={car} />
+        </CardFooter>
+        <CardFooter className="p-0 m-0">
+          <Button
+            onClick={handleViewClick}
+            variant={"ghost"}
+            className="w-full"
+          >
+            View
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

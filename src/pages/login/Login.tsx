@@ -84,6 +84,7 @@ export default function Login() {
                 control={form.control}
                 registerName="password"
                 registerString="Password"
+                typeInput="password"
               />
               <Button variant="ghost" disabled={form.formState.isSubmitting}>
                 Login

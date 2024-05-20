@@ -4,6 +4,8 @@ export type User = {
   _id: string;
   cars: string[];
   favorites: string[];
+  lastSearch: string;
+  lastSearchTime: Date;
 };
 
 export type Taddress = {

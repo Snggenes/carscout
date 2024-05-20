@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { carData, prices, years } from "../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { FormSelect } from "../form-elements";
-
-import { useStore } from "../../contexts/store";
+import { useMutation } from "@tanstack/react-query";
+import { useUser } from "../../contexts/userContext";
 
 const FormSchema = z.object({
   brand: z.string({
@@ -22,7 +21,7 @@ const FormSchema = z.object({
 
 export function Search() {
   const navigate = useNavigate();
-  const store = useStore();
+  const { user, setUser } = useUser();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -34,26 +33,55 @@ export function Search() {
     ? carData.find((car) => car.brand === selectedBrand)?.models
     : [];
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const params = new URLSearchParams();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, value);
+  const { mutate } = useMutation({
+    mutationFn: async (data: z.infer<typeof FormSchema>) => {
+      let params = {};
+      Object.entries(data).forEach(([key, value]) => {
+        if (value) {
+          params = { ...params, [key]: value };
+        }
+      });
+
+      let queryString: string;
+      queryString = Object.entries(params)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+
+      if (!user?.username) {
+        return navigate(`/list?${queryString}`);
       }
-    });
-    store.setParams(params);
-    navigate(`/list?${params.toString()}`);
-  }
+
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/auth/last-search?${queryString}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const resData = await res.json();
+
+      if (resData.error) {
+        return resData.error(resData.error);
+      }
+      setUser(null);
+      navigate(`/list?${queryString}`);
+    },
+  });
 
   return (
     <div className="relative w-full h-[220px] sm:h-[290px] md:h-[460px] xl:h-[520px] bg-[url('/main.webp')] bg-cover bg-center bg-no-repeat">
-      <div className={`max-w-[1200px] hidden md:block absolute mt-4 bottom-10 px-4 md:xl-16 w-full`}>
+      <div
+        className={`max-w-[1200px] hidden md:block absolute mt-4 bottom-10 px-4 md:xl-16 w-full`}
+      >
         <div className="w-12 h-8 bg-white flex flex-row items-center justify-center rounded-t-lg">
           <Car size={30} />
         </div>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit((data) => mutate(data))}
             className="p-6 gap-4 w-full lg:w-5/6 bg-white grid grid-cols-3"
           >
             <FormSelect
@@ -83,6 +111,9 @@ export function Search() {
             <Button type="submit" variant="ghost">
               Submit
             </Button>
+            <Button variant="link" onClick={()=> {
+              navigate('/advanced-search')
+            }}>Advanced Search</Button>
           </form>
         </Form>
       </div>

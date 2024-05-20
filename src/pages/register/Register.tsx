@@ -87,6 +87,7 @@ export default function Register() {
                 control={form.control}
                 registerName="password"
                 registerString="Password"
+                typeInput="password"
               />
             </Form>
             <Button variant="ghost" disabled={form.formState.isSubmitting}>
