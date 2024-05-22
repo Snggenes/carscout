@@ -49,7 +49,7 @@ export default function List() {
           {isLoading && <Loading />}
           {cars?.length === 0 && <div>No cars found</div>}
           {cars?.map((car: any) => (
-            <div className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6">
+            <div key={car?._id} className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6">
               <div className="p-4 flex flex-col xl:flex-row xl:gap-8 xl:pl-8">
                 <Car key={car._id} car={car} className="flex flex-col md:flex-row"/>
               </div>

@@ -43,23 +43,23 @@ export function SaveQuery() {
 
   if (!user?.lastSearch) {
     return (
-      <div className="border w-full md:w-2/3 lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
+      <div className="border w-full lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
         <div className="flex flex-row items-center gap-8">
           <Car size={30} />
           <div>
             <h2 className="text-lg font-semibold">Get the notifications</h2>
             <p className="text-sm text-stone-500">
-              Your queries are automaticall saved so that we can inform you when new cars are added.
+              Your queries are automaticall saved so that we can inform you when
+              new cars are added.
             </p>
           </div>
         </div>
       </div>
-    
     );
   }
 
   return (
-    <div className="border w-full md:w-2/3 lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
+    <div className="border w-full lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
       <div className="flex flex-row items-center gap-8">
         <Car size={30} />
         <div>

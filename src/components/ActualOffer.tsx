@@ -2,7 +2,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 
 export function ActualOffer() {
   return (
-    <div className="border w-full md:w-2/3  lg:w-[620px] h-[180px] bg-white flex flex-row gap-4 items-center justify-center">
+    <div className="border w-full p-10 lg:w-[620px] h-[180px] bg-white flex flex-row gap-4 items-center justify-center">
       <div className="flex flex-col items-center">
         <Avatar className="h-16 w-16">
           <AvatarImage src="familienauto.webp" alt="avatar" />

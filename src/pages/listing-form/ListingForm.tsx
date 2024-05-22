@@ -57,6 +57,7 @@ export default function ListingForm() {
       phone: "",
       postcode: "",
       houseNumber: "",
+      description: "No description.",
     },
   });
 

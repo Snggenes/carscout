@@ -3,12 +3,16 @@ import Loading from "./Loading";
 import { TCar } from "@/lib/types/types";
 import { Car } from "./Car";
 
+import { useUser } from "../contexts/userContext";
+
 export const LastAddedCars = () => {
+  const { user } = useUser();
+
   const { data: cars, isLoading } = useQuery({
     queryKey: ["new-listings"],
     queryFn: async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/cars?random=true&limit=4`,
+        `${import.meta.env.VITE_BASE_URL}/cars/lastAdded`,
         {
           method: "GET",
           headers: {
@@ -18,9 +22,11 @@ export const LastAddedCars = () => {
         }
       );
       const data = await response.json();
-      console.log(data);
-
-      return data;
+      const notOwnedCars = data.data.filter(
+        (car: TCar) => car.owner !== user?._id
+      );
+      const firstFour = notOwnedCars.slice(0, 4);
+      return firstFour;
     },
   });
   return (
@@ -28,8 +34,8 @@ export const LastAddedCars = () => {
       <h1 className="m-2 font-semibold text-lg">Newest Cars</h1>
       {isLoading && <Loading />}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-        {cars?.data.map((car: TCar) => (
-          <Car key={car._id} car={car} className="flex flex-col"/>
+        {cars?.map((car: TCar) => (
+          <Car key={car._id} car={car} className="flex flex-col" />
         ))}
       </div>
     </div>

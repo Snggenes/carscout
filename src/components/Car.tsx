@@ -3,8 +3,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "../components/ui/carousel";
 
 import { useNavigate } from "react-router-dom";
@@ -18,8 +16,10 @@ import {
   CardDescription,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+
+import { MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   car: TCar;
@@ -37,8 +37,6 @@ export function Car({ car, className }: Props) {
       setHasClicked(true);
     }
   }, []);
-  console.log(clickedCars);
-  console.log(hasClicked);
 
   const handleViewClick = async () => {
     if (hasClicked) {
@@ -62,9 +60,10 @@ export function Car({ car, className }: Props) {
     console.log(data);
     navigate(`/listing/${car._id}`);
   };
+
   return (
-    <div className={cn(`border p-2 ` + className)}>
-      <Carousel className="w-full max-w-lg xl:mr-8 cursor-pointer">
+    <div className={cn(`border p-2 flex justify-center ` + className)}>
+      <Carousel className="cursor-pointer">
         <CarouselContent>
           {car?.image.map((image: any, index: any) => (
             <CarouselItem key={index}>
@@ -72,10 +71,8 @@ export function Car({ car, className }: Props) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-2" />
-        <CarouselNext className="right-2" />
       </Carousel>
-      <Card className="w-full max-w-lg border-none">
+      <Card className="border-none">
         <CardHeader>
           <CardTitle>
             {car?.brand} {car?.model}
@@ -86,9 +83,12 @@ export function Car({ car, className }: Props) {
           </CardDescription>
         </CardHeader>
         <CardFooter className="flex justify-between py-1">
-          <CardDescription>{car?.address.city}</CardDescription>
+          <CardDescription className="flex flex-row text-blue-400">
+            {car?.address.city} <MapPin className="h-4" />
+          </CardDescription>
           <Heart car={car} />
         </CardFooter>
+
         <CardFooter className="p-0 m-0">
           <Button
             onClick={handleViewClick}
