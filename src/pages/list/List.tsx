@@ -20,7 +20,7 @@ export default function List() {
     queryKey: ["cars", queryString],
     queryFn: async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/cars?${queryString}`
+        `/api/cars?${queryString}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -44,7 +44,7 @@ export default function List() {
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
-      <div className="lg:pl-[256px] pt-[50px] lg:pt-0">
+      <div className="lg:pl-[256px] pt-16">
         <div className="max-w-[1256px] mx-auto lg:pt-6 h-full">
           {isLoading && <Loading />}
           {cars?.length === 0 && <div>No cars found</div>}

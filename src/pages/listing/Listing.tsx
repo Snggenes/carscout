@@ -32,8 +32,11 @@ import {
 import Heart from "@/components/Heart";
 import { Button } from "@/components/ui/button";
 
+import { useUser } from "@/contexts/userContext";
+
 export default function Listing() {
   const { id } = useParams();
+  const { user } = useUser();
   const url = window.location.href;
   // const [center, setCenter] = useState<[number, number]>();
 
@@ -44,9 +47,7 @@ export default function Listing() {
   } = useQuery<TCar>({
     queryKey: ["car", id],
     queryFn: async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/cars?id=${id}`
-      );
+      const response = await fetch(`/api/cars?id=${id}`);
       const data = await response.json();
       // setCenter([data.address.latitude, data.address.longitude]);
       return data;
@@ -73,9 +74,11 @@ export default function Listing() {
         </Carousel>
         <Card className="border-none w-full lg:mt-2">
           <CardContent className="flex flex-row justify-between pt-4 pb-0">
-            <div className="flex flex-row gap-2 items-center cursor-pointer">
-              Save <Heart car={car} />
-            </div>
+            {user?.username && (
+              <div className="flex flex-row gap-2 items-center cursor-pointer">
+                Save <Heart car={car} />
+              </div>
+            )}
             <CopyToClipboard text={url}>
               <button className="flex flex-row gap-2 items-center cursor-pointer">
                 Share{" "}
@@ -101,7 +104,10 @@ export default function Listing() {
             </CardDescription>
             <hr />
             <CardDescription className="flex flex-row items-center gap-4">
-              From <span className=" font-semibold text-xl">{Math.floor(car?.price / 70)} €</span>{" "}
+              From{" "}
+              <span className=" font-semibold text-xl">
+                {Math.floor(car?.price / 70)} €
+              </span>{" "}
               per month
               <img
                 src="https://dvdzzp.nl/wp-content/uploads/2022/04/financiallease-logo-vierkant-424x212.png"

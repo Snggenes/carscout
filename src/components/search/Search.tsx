@@ -51,16 +51,13 @@ export function Search() {
         return navigate(`/list?${queryString}`);
       }
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/auth/last-search?${queryString}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`/api/auth/last-search?${queryString}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const resData = await res.json();
 
       if (resData.error) {
@@ -72,7 +69,7 @@ export function Search() {
   });
 
   return (
-    <div className="relative w-full h-[220px] sm:h-[290px] md:h-[460px] xl:h-[520px] bg-[url('/main.webp')] bg-cover bg-center bg-no-repeat">
+    <div className="relative w-full h-[220px] sm:h-[290px] md:h-[460px] xl:h-[520px] bg-[url('https://www.tweedehandsauto.nl/wp-content/uploads/2023/04/148881163_m-1568x1046.jpg')] bg-cover bg-center bg-no-repeat">
       <div
         className={`max-w-[1200px] hidden md:block absolute mt-4 bottom-10 px-4 md:xl-16 w-full`}
       >
@@ -111,9 +108,14 @@ export function Search() {
             <Button type="submit" variant="ghost">
               Submit
             </Button>
-            <Button variant="link" onClick={()=> {
-              navigate('/advanced-search')
-            }}>Advanced Search</Button>
+            <Button
+              variant="link"
+              onClick={() => {
+                navigate("/advanced-search");
+              }}
+            >
+              Advanced Search
+            </Button>
           </form>
         </Form>
       </div>

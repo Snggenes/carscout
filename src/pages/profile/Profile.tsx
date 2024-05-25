@@ -13,7 +13,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <div>
+    <div className="pt-16">
       <h1>hi {user?.username}</h1>
     </div>
   );

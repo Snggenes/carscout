@@ -20,7 +20,7 @@ export default function Heart({car}: Props) {
     }, [user]);
 
     async function handleHeartClick(){
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/favorites`, {
+      const response = await fetch(`/api/auth/favorites`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

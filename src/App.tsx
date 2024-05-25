@@ -21,7 +21,7 @@ export default function App() {
       <ToastContainer position="bottom-left" autoClose={1500} hideProgressBar/>
       <Router>
         <Navbar />
-        <div className="pt-16">
+        <div className="">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

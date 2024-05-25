@@ -1,11 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import Loading from "../components/Loading"
+import Loading from "../components/Loading";
 import type { User } from "../lib/types/types";
-import useFetch from "@/hooks/useFetch";
 
 type UserContextType = {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -18,13 +17,24 @@ export default function UserProvider({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const onSuccess = (data: any) => {
-    setUser(data.safeUser);
-    // console.log(data.safeUser);
-    setLoading(false);
-  };
+  const performFetch = async () => {
+    try {
+      const res = await fetch('/api/auth/profile', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await res.json();
+      console.log(data.safeUser);
 
-  const { performFetch } = useFetch("auth/profile", onSuccess);
+      setUser(data.safeUser);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -34,11 +44,7 @@ export default function UserProvider({
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {loading ? (
-        <Loading />
-      ) : (
-        children
-      )}
+      {loading ? <Loading /> : children}
     </UserContext.Provider>
   );
 }

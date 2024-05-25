@@ -22,7 +22,7 @@ export default function Favorites() {
   const { data: cars, isLoading, isError } = useQuery({
     queryKey: ["favorites", user?.favorites],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/favorites`, {
+      const res = await fetch(`/api/auth/favorites`, {
         credentials: "include",
       });
       return res.json();
@@ -43,7 +43,7 @@ export default function Favorites() {
       }
 
   return (
-    <div>
+    <div className="pt-16">
         {cars.data.map((car: TCar) => (
             <Car key={car._id} car={car} />
         ))}

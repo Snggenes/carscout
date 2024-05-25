@@ -72,7 +72,7 @@ export default function ListingForm() {
       if (image.length === 0) {
         return toast.error("Please fill in all the fields");
       }
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/cars`, {
+      const res = await fetch(`/api/cars`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

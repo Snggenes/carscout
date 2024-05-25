@@ -46,7 +46,7 @@ export function Car({ car, className }: Props) {
     localStorage.setItem("clickedCars", JSON.stringify(newClickedCars));
     setHasClicked(true);
     const response = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/cars/counter`,
+      `/api/cars/counter`,
       {
         method: "PUT",
         headers: {

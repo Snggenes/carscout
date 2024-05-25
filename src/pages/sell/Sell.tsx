@@ -50,40 +50,41 @@ export default function Sell() {
   });
 
   return (
-    <div className="h-[560px] xl:h-[680px] flex flex-col items-center justify-between gap-2 md:gap-8 lg:gap-14 bg-[url('/main.webp')] bg-cover bg-no-repeat bg-center">
-      <div></div>
-      <Card className="mb-4 xl:mb-12">
-        <CardHeader className="mb-8">
-          <CardTitle>Enter your data</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="p-4 flex flex-col gap-2 w-[424px] h-[250px] xl:h-[300px]"
-          >
-            <Form {...form}>
-              <FormInput
-                control={form.control}
-                registerName="licencePlate"
-                registerString="Licence Plate"
-              />
-              <FormInput
-                control={form.control}
-                registerName="mileage"
-                registerString="Mileage"
-              />
-            </Form>
-
-            <Button
-              variant="ghost"
-              disabled={form.formState.isSubmitting}
-              className="mt-4"
+    <div className="h-screen pt-16 flex flex-col items-center">
+      <div className="h-full md:h-3/4 max-w-[1200px] w-full flex flex-col items-center justify-center md:bg-[url('https://www.autoscout24.nl/private-seller-unified-flow/assets/images/bg-desktop.webp')] bg-cover bg-center bg-no-repeat">
+        <Card className="mb-4 xl:mb-12 h-full w-full md:h-2/3 md:w-1/2 xl:w-1/3">
+          <CardHeader className="mb-8">
+            <CardTitle>Enter your data</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="p-4 flex flex-col gap-2 xl:h-[300px]"
             >
-              Next
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <Form {...form}>
+                <FormInput
+                  control={form.control}
+                  registerName="licencePlate"
+                  registerString="Licence Plate"
+                />
+                <FormInput
+                  control={form.control}
+                  registerName="mileage"
+                  registerString="Mileage"
+                />
+              </Form>
+
+              <Button
+                variant="ghost"
+                disabled={form.formState.isSubmitting}
+                className="mt-4"
+              >
+                Next
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

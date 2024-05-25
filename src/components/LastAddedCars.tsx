@@ -12,7 +12,7 @@ export const LastAddedCars = () => {
     queryKey: ["new-listings"],
     queryFn: async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/cars/lastAdded`,
+        `/api/cars/lastAdded`,
         {
           method: "GET",
           headers: {
