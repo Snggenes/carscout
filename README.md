@@ -1,25 +1,45 @@
-# CarScout
+# CarsProject
 
-CarScout is a web application aimed at providing users with a platform to buy and sell vehicles, similar to AutoScout24. This project utilizes React with TypeScript for the frontend, Zustand for state management, and Tailwind CSS along with shadcn UI for styling. Node.js with Express.js is used for the backend.
+CarsProject is a full-stack web application similar to AutoScout, where users can search for cars, buy cars, and sell their cars. The application is built using React for the frontend and Node.js for the backend.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
 
 ## Features
 
-- **User Authentication**: Allow users to sign up, log in, and manage their accounts securely.
-- **Vehicle Listings**: Enable users to list their vehicles for sale with detailed information and images.
-- **Search and Filter**: Provide users with robust search and filtering options to find the perfect vehicle.
-- **Responsive Design**: Ensure the application is accessible and functional across various devices and screen sizes.
+- User authentication and authorization
+- Search for cars based on various filters
+- List cars for sale
+- Purchase cars
+- User profile management
+- Image upload and management using Cloudinary
+- Secure API endpoints with JWT
 
 ## Tech Stack
 
-- **Frontend**:
-  - React with TypeScript
-  - Zustand (for state management)
-  - Tailwind CSS (CSS framework)
-  - shadcn UI (for component library)
-- **Backend**:
-  - Node.js
-  - Express.js
-  - MongoDB (Mongoose) for database
-- **Authentication**:
-  - JSON Web Tokens (JWT) for authentication
-  - bcrypt.js for password hashing
+**Frontend:**
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Shadcn Ui
+- React Hook Form
+- React Query
+- Google for maps
+- Cloudinary for image management
+
+**Backend:**
+- Node.js
+- Express
+- MongoDB with Mongoose
+- JWT for authentication
+- Helmet for security
+- CORS
+- Dotenv for environment variables
+
+## Live Demo
+
+Check out the live demo of the project [here](https://carscout-rjs-ejs-2774c71ce9e3.herokuapp.com/).
+
