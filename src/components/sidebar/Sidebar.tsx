@@ -1,10 +1,9 @@
-import { cn } from "../../lib/utils";
 import { z } from "zod";
 import { Form } from "../../components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { FormSelect } from "../../components/form-elements";
+import { X } from "lucide-react";
 import {
   carData,
   prices,
@@ -22,6 +21,8 @@ type Props = {
   className?: string;
   setSearchParams?: any;
   searchParams?: any;
+  setSidebarOpen?: any;
+  sidebarOpen?: boolean;
 };
 
 const FormSchema = z.object({
@@ -38,7 +39,12 @@ const FormSchema = z.object({
   color: z.string().optional(),
 });
 
-export function Sidebar({ className, searchParams, setSearchParams }: Props) {
+export function Sidebar({
+  searchParams,
+  setSearchParams,
+  setSidebarOpen,
+  sidebarOpen,
+}: Props) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -74,15 +80,13 @@ export function Sidebar({ className, searchParams, setSearchParams }: Props) {
   };
 
   return (
-    <div
-      className={cn(
-        "border flex mt-6 lg:w-[256px] lg:fixed left-0 top-16 px-4 border-r-2 flex-col",
-        className
-      )}
-    >
+    <div className="w-full col-span-1">
+      <div className="flex justify-end p-2 cursor-pointer lg:hidden">
+        <X size={32} onClick={() => setSidebarOpen(!sidebarOpen)} />
+      </div>
       <Form {...form}>
         <form
-          className="flex flex-col w-full gap-2 py-2"
+          className="flex flex-col w-full gap-2 p-2"
           onChange={handleFormChange()}
         >
           <FormSelect

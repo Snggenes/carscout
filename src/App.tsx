@@ -6,8 +6,8 @@ import { Navbar } from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import Favorites from "./pages/favorites/Favorites";
-import Profile from "./pages/profile/Profile";
+import Favorites from "./components/Favorites";
+import Account from "./pages/account/Account";
 import List from "./pages/list/List";
 import Sell from "./pages/sell/Sell";
 import ListingForm from "./pages/listing-form/ListingForm";
@@ -26,13 +26,14 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/list" element={<List />} />
             <Route path="/advanced-search" element={<Search />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/listing-form" element={<ListingForm />} />
             <Route path="/listing/:id" element={<Listing />} />
+            <Route path="/account" element={<Account />}>
+              <Route path="favorites" element={<Favorites />} />
+            </Route>
           </Routes>
         </div>
       </Router>

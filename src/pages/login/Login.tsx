@@ -64,7 +64,7 @@ export default function Login() {
 
   return (
     <div className="pt-16 w-full h-screen flex flex-col items-center justify-center">
-      <Card className="w-full p-2 md:w-1/2 xl:w-1/3 lg:p-0 h-full md:h-2/3">
+      <Card className="w-full p-2 md:w-1/2 lg:w-5/12 xl:w-1/3 2xl:w-1/4 lg:p-0 h-full md:h-2/3 shadow-2xl">
         <CardHeader>
           <CardTitle className="mb-2">Login</CardTitle>
           <CardDescription>Enter your credentials to login</CardDescription>

@@ -13,7 +13,7 @@ export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const res = await fetch('/api/auth/logout', {
+    const res = await fetch("/api/auth/logout", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -36,7 +36,7 @@ export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
         <div className="bg-white w-24 z-50 absolute top-12 right-0 flex flex-col text-black">
           <div className="flex flex-col gap-3">
             <Button variant="ghost" asChild>
-              <Link to="/profile">Profile</Link>
+              <Link to="/account">Account</Link>
             </Button>
             <Button variant="ghost" onClick={handleLogout}>
               Logout

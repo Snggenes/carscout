@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/contexts/userContext";
-import {Car} from "../../components/Car"
+import { Car } from "./Car";
 import { useQuery } from "@tanstack/react-query";
-import { TCar } from "../../lib/types/types";
+import { TCar } from "../lib/types/types";
 
-import Loading from "../../components/Loading";
+import Loading from "./Loading";
 
 export default function Favorites() {
   const navigate = useNavigate();
@@ -17,9 +17,11 @@ export default function Favorites() {
     }
   }, []);
 
- 
-
-  const { data: cars, isLoading, isError } = useQuery({
+  const {
+    data: cars,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["favorites", user?.favorites],
     queryFn: async () => {
       const res = await fetch(`/api/auth/favorites`, {
@@ -29,24 +31,25 @@ export default function Favorites() {
     },
   });
 
-    if (isLoading) {
-        return <Loading />;
-    }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    if (isError) {
-        return <h1>Error fetching favorites</h1>;
-    }
+  if (isError) {
+    return <h1>Error fetching favorites</h1>;
+  }
 
-
-    if (user?.favorites.length === 0) {
-        return <h1>No favorites yet!</h1>;
-      }
+  if (user?.favorites.length === 0) {
+    return <h1>No favorites yet!</h1>;
+  }
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 flex flex-col items-center">
+      <div className="w-full max-w-[1200px] flex flex-col lg:p-4 gap-4">
         {cars.data.map((car: TCar) => (
-            <Car key={car._id} car={car} />
+          <Car key={car._id} car={car} />
         ))}
+      </div>
     </div>
   );
 }

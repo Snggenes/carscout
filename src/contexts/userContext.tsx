@@ -27,7 +27,6 @@ export default function UserProvider({
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data.safeUser);
 
       setUser(data.safeUser);
       setLoading(false);

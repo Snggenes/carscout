@@ -59,7 +59,7 @@ export default function Listing() {
   if (!car) return <div>Car not found</div>;
 
   return (
-    <div className="lg:px-4 flex flex-col justify-center items-center">
+    <div className="pt-16 lg:px-4 flex flex-col justify-center items-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 bg-white max-w-[1200px]">
         <Carousel className="cursor-pointer w-full">
           <CarouselContent>
@@ -212,15 +212,4 @@ export default function Listing() {
       </Card>
     </div>
   );
-}
-
-{
-  /* <div className="w-[450px]">
-  {center && (
-    <Map
-      lat={Number(car?.address.latitude)}
-      lng={Number(car?.address.longitude)}
-    />
-  )}
-</div> */
 }

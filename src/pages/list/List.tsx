@@ -1,16 +1,17 @@
 import { useSearchParams } from "react-router-dom";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { MobileHeader } from "@/components/sidebar/MobileHeader";
 
 import { Car } from "@/components/Car";
 import Loading from "../../components/Loading";
-
+import { Sidebar } from "@/components/sidebar/Sidebar";
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { Menu } from "lucide-react";
 
 export default function List() {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const queryString = new URLSearchParams(searchParams).toString();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const {
     isLoading,
@@ -19,9 +20,7 @@ export default function List() {
   } = useQuery({
     queryKey: ["cars", queryString],
     queryFn: async () => {
-      const response = await fetch(
-        `/api/cars?${queryString}`
-      );
+      const response = await fetch(`/api/cars?${queryString}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -33,27 +32,46 @@ export default function List() {
 
   if (error) return <div>Error: {error.message}</div>;
 
+  useEffect(() => {
+    const trackWindowSize = () => {
+      if (window.innerWidth > 1024) {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", trackWindowSize);
+    return () => {
+      window.removeEventListener("resize", trackWindowSize);
+    };
+  }, []);
+
   return (
-    <div>
-      <MobileHeader
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
-      <Sidebar
-        className="hidden lg:flex"
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
-      <div className="lg:pl-[256px] pt-16">
-        <div className="max-w-[1256px] mx-auto lg:pt-6 h-full">
-          {isLoading && <Loading />}
-          {cars?.length === 0 && <div>No cars found</div>}
+    <div className="pt-16 flex justify-center">
+      <div className="min-h-screen w-full max-w-[1200px] flex flex-col lg:gap-4 lg:grid grid-cols-5 relative">
+        <div
+          className={
+            sidebarOpen
+              ? "absolute z-50 w-60 min-h-screen shadow-lg rounded-lg bg-white"
+              : "pt-4 hidden lg:flex bg-white"
+          }
+        >
+          <Sidebar
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+            setSidebarOpen={setSidebarOpen}
+            sidebarOpen={sidebarOpen}
+          />
+        </div>
+        <div
+          className="block lg:hidden p-2 cursor-pointer"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <Menu size={32} />
+        </div>
+        {isLoading && <Loading />}
+        {cars?.length === 0 && <div>No cars found</div>}
+        <div className="w-full col-span-4 lg:py-4 space-y-4">
           {cars?.map((car: any) => (
-            <div key={car?._id} className="ml-0 lg:ml-8 flex flex-col justify-center lg:justify-start items-center xl:flex-row xl:gap-8 px-6">
-              <div className="p-4 flex flex-col xl:flex-row xl:gap-8 xl:pl-8">
-                <Car key={car._id} car={car} className="flex flex-col md:flex-row"/>
-              </div>
-            </div>
+            <Car key={car._id} car={car} />
           ))}
         </div>
       </div>

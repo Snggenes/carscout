@@ -34,7 +34,6 @@ export default function Sell() {
   }, []);
 
   const onSubmit = async (data: FieldValues) => {
-    toast(JSON.stringify(data));
     navigate(
       `/listing-form?licencePlate=${data.licencePlate}&mileage=${data.mileage}`
     );

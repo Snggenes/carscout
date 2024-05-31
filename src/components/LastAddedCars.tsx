@@ -35,7 +35,7 @@ export const LastAddedCars = () => {
       {isLoading && <Loading />}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         {cars?.map((car: TCar) => (
-          <Car key={car._id} car={car} className="flex flex-col" />
+          <Car key={car._id} car={car} mainPage={true}/>
         ))}
       </div>
     </div>
