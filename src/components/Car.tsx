@@ -21,7 +21,7 @@ import { Share } from "lucide-react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import { useUser } from "../contexts/userContext";
-
+import { handleViewClick } from "../lib/api";
 import { Antenna, Calendar, Fuel, Gauge, Kanban, MapPin } from "lucide-react";
 
 type Props = {
@@ -30,11 +30,10 @@ type Props = {
 };
 
 export function Car({ car, mainPage }: Props) {
-  const { user } = useUser();
-  const url = window.location.href;
-
   const [hasClicked, setHasClicked] = useState(false);
+  const { user } = useUser();
   const navigate = useNavigate();
+  const url = window.location.href;
 
   const clickedCars = JSON.parse(localStorage.getItem("clickedCars") || "[]");
 
@@ -44,33 +43,24 @@ export function Car({ car, mainPage }: Props) {
     }
   }, []);
 
-  const handleViewClick = async () => {
-    if (hasClicked) {
-      return navigate(`/listing/${car._id}`);
-    }
-    const newClickedCars = [...clickedCars, car._id];
-    localStorage.setItem("clickedCars", JSON.stringify(newClickedCars));
-    setHasClicked(true);
-    const response = await fetch(`/api/cars/counter`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: car._id }),
-      credentials: "include",
-    });
-    const data = await response.json();
-    console.log(data);
-    navigate(`/listing/${car._id}`);
-  };
-
   if (mainPage) {
     return (
       <div className="border p-2 flex justify-center flex-col">
         <Carousel className="cursor-pointer">
           <CarouselContent>
             {car?.image.map((image: any, index: any) => (
-              <CarouselItem key={index} onClick={handleViewClick}>
+              <CarouselItem
+                key={index}
+                onClick={() =>
+                  handleViewClick(
+                    hasClicked,
+                    setHasClicked,
+                    navigate,
+                    car,
+                    clickedCars
+                  )
+                }
+              >
                 <img src={image} alt="" />
               </CarouselItem>
             ))}
@@ -120,7 +110,18 @@ export function Car({ car, mainPage }: Props) {
           <Carousel className="cursor-pointer w-full md:w-1/3">
             <CarouselContent>
               {car?.image.map((image: any, index: any) => (
-                <CarouselItem key={index} onClick={handleViewClick}>
+                <CarouselItem
+                  key={index}
+                  onClick={() =>
+                    handleViewClick(
+                      hasClicked,
+                      setHasClicked,
+                      navigate,
+                      car,
+                      clickedCars
+                    )
+                  }
+                >
                   <img src={image} alt="" />
                 </CarouselItem>
               ))}

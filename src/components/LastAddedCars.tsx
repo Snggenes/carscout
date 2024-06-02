@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "./Loading";
 import { TCar } from "@/lib/types/types";
 import { Car } from "./Car";
+import { getLastAddedCars } from "@/lib/api";
 
 import { useUser } from "../contexts/userContext";
 
@@ -10,24 +11,7 @@ export const LastAddedCars = () => {
 
   const { data: cars, isLoading } = useQuery({
     queryKey: ["new-listings"],
-    queryFn: async () => {
-      const response = await fetch(
-        `/api/cars/lastAdded`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      const notOwnedCars = data.data.filter(
-        (car: TCar) => car.owner !== user?._id
-      );
-      const firstFour = notOwnedCars.slice(0, 4);
-      return firstFour;
-    },
+    queryFn: () => getLastAddedCars(user),
   });
   return (
     <div className="lg:w-full mt-4 max-w-[1200px] h-full px-2">
@@ -35,7 +19,7 @@ export const LastAddedCars = () => {
       {isLoading && <Loading />}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         {cars?.map((car: TCar) => (
-          <Car key={car._id} car={car} mainPage={true}/>
+          <Car key={car._id} car={car} mainPage={true} />
         ))}
       </div>
     </div>

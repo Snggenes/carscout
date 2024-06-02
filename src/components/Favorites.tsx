@@ -4,6 +4,7 @@ import { useUser } from "@/contexts/userContext";
 import { Car } from "./Car";
 import { useQuery } from "@tanstack/react-query";
 import { TCar } from "../lib/types/types";
+import { getFavorites } from "@/lib/api";
 
 import Loading from "./Loading";
 
@@ -23,12 +24,7 @@ export default function Favorites() {
     isError,
   } = useQuery({
     queryKey: ["favorites", user?.favorites],
-    queryFn: async () => {
-      const res = await fetch(`/api/auth/favorites`, {
-        credentials: "include",
-      });
-      return res.json();
-    },
+    queryFn: () => getFavorites(),
   });
 
   if (isLoading) {
@@ -44,7 +40,7 @@ export default function Favorites() {
   }
 
   return (
-    <div className="pt-16 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="w-full max-w-[1200px] flex flex-col lg:p-4 gap-4">
         {cars.data.map((car: TCar) => (
           <Car key={car._id} car={car} />

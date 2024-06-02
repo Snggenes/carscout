@@ -10,21 +10,15 @@ import { FormSelect } from "../form-elements";
 import { useMutation } from "@tanstack/react-query";
 import { useUser } from "../../contexts/userContext";
 
-const FormSchema = z.object({
-  brand: z.string({
-    required_error: "Please select a brand.",
-  }),
-  model: z.string().optional(),
-  price: z.string().optional(),
-  year: z.string().optional(),
-});
+import { SearchSchema } from "../../lib/types/models";
+import { mainPageSearch } from "../../lib/api";
 
 export function Search() {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof SearchSchema>>({
+    resolver: zodResolver(SearchSchema),
   });
 
   const carDataBrands = carData.map((car) => car.brand);
@@ -34,38 +28,8 @@ export function Search() {
     : [];
 
   const { mutate } = useMutation({
-    mutationFn: async (data: z.infer<typeof FormSchema>) => {
-      let params = {};
-      Object.entries(data).forEach(([key, value]) => {
-        if (value) {
-          params = { ...params, [key]: value };
-        }
-      });
-
-      let queryString: string;
-      queryString = Object.entries(params)
-        .map(([key, value]) => `${key}=${value}`)
-        .join("&");
-
-      if (!user?.username) {
-        return navigate(`/list?${queryString}`);
-      }
-
-      const res = await fetch(`/api/auth/last-search?${queryString}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      const resData = await res.json();
-
-      if (resData.error) {
-        return resData.error(resData.error);
-      }
-      setUser(null);
-      navigate(`/list?${queryString}`);
-    },
+    mutationFn: (data: z.infer<typeof SearchSchema>) =>
+      mainPageSearch(data, user, setUser, navigate),
   });
 
   return (
@@ -110,6 +74,7 @@ export function Search() {
             </Button>
             <Button
               variant="link"
+              disabled
               onClick={() => {
                 navigate("/advanced-search");
               }}

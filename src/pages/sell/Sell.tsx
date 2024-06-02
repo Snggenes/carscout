@@ -16,6 +16,7 @@ import {
 import { FormInput } from "@/components/form-elements";
 import { useUser } from "../../contexts/userContext";
 import { useEffect } from "react";
+import { sellDefaultValues } from "@/lib/types/defaultValues";
 
 export default function Sell() {
   const { user } = useUser();
@@ -34,6 +35,9 @@ export default function Sell() {
   }, []);
 
   const onSubmit = async (data: FieldValues) => {
+    if (data.licencePlate === "" || data.mileage === "") {
+      return toast.error("Please fill in all the fields");
+    }
     navigate(
       `/listing-form?licencePlate=${data.licencePlate}&mileage=${data.mileage}`
     );
@@ -42,10 +46,7 @@ export default function Sell() {
 
   const form = useForm<z.infer<typeof SellFormSchema>>({
     resolver: zodResolver(SellFormSchema),
-    defaultValues: {
-      licencePlate: "",
-      mileage: "",
-    },
+    defaultValues: sellDefaultValues,
   });
 
   return (

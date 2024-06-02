@@ -20,6 +20,7 @@ import {
 import { toast } from "react-toastify";
 import { FormInput } from "@/components/form-elements";
 import { LoginFormSchema } from "../../lib/types/models";
+import { loginDefaultValues } from "@/lib/types/defaultValues";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -38,10 +39,7 @@ export default function Login() {
 
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: loginDefaultValues,
   });
 
   const onSubmit = async (data: FieldValues) => {

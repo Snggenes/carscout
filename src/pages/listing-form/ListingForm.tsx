@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { z } from "zod";
 import { Form } from "../../components/ui/form";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { ListingFormSchema } from "../../lib/types/models";
-
+import { FormSelect, FormInput } from "../../components/form-elements";
+import { Button } from "../../components/ui/button";
+import { Textarea } from "../../components/ui/textarea";
+import { CardDescription, CardTitle } from "../../components/ui/card";
+import { listingFormDefaultValues } from "@/lib/types/defaultValues";
+import { UploadWidget } from "@/components/image-upload/UploadWidget";
+import { toast } from "react-toastify";
+import { postListing } from "@/lib/api";
 import {
   carData,
   body,
@@ -25,21 +29,12 @@ import {
   transmission,
   power,
 } from "../../lib/data";
-import { FormSelect, FormInput } from "../../components/form-elements";
-import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
-import { CardDescription, CardTitle } from "../../components/ui/card";
-
-import { UploadWidget } from "@/components/image-upload/UploadWidget";
-import { toast } from "react-toastify";
 
 export default function ListingForm() {
   const [searchParams] = useSearchParams();
   const [image, setImage] = useState([]);
   const queryClient = useQueryClient();
-
   const navigate = useNavigate();
-
   const licencePlate = searchParams.get("licencePlate")?.toUpperCase();
   const km = searchParams.get("mileage");
 
@@ -54,10 +49,7 @@ export default function ListingForm() {
     defaultValues: {
       licencePlate: licencePlate || undefined,
       km: km || undefined,
-      phone: "",
-      postcode: "",
-      houseNumber: "",
-      description: "No description.",
+      ...listingFormDefaultValues,
     },
   });
 
@@ -66,29 +58,11 @@ export default function ListingForm() {
     ? carData.find((car) => car.brand === selectedBrand)?.models
     : [];
 
-
   const { mutate } = useMutation({
-    mutationFn: form.handleSubmit(async (data) => {
-      if (image.length === 0) {
-        return toast.error("Please fill in all the fields");
-      }
-      const res = await fetch(`/api/cars`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ ...data, image }),
-      });
-      const newCar = await res.json();
-      if (newCar.error) {
-        return toast.error(newCar.error);
-      }
-      toast.success(newCar.message);
-    }),
+    mutationFn: (data: FieldValues) => postListing(data, image, toast),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["cars"]})
-      navigate("/sell");
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+      navigate("/");
     },
   });
 
@@ -98,10 +72,12 @@ export default function ListingForm() {
         <div className="bg-white hidden md:flex md:flex-none md:w-[360px]">
           {licencePlate}/{km}
         </div>
-
         <div className="bg-white flex-1 p-4 border rounded-md">
           <Form {...form}>
-            <form onSubmit={mutate} className="w-2/3 space-y-8">
+            <form
+              onSubmit={form.handleSubmit((data) => mutate(data))}
+              className="w-2/3 space-y-8"
+            >
               <div id="1" className="space-y-4">
                 <CardTitle className="mb-6">Car Details</CardTitle>
                 <div>

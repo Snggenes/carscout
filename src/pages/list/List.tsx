@@ -6,6 +6,7 @@ import { Sidebar } from "@/components/sidebar/Sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
+import { getCarsList } from "@/lib/api";
 
 export default function List() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,13 +20,7 @@ export default function List() {
     data: cars,
   } = useQuery({
     queryKey: ["cars", queryString],
-    queryFn: async () => {
-      const response = await fetch(`/api/cars?${queryString}`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
+    queryFn: () => getCarsList(queryString),
     staleTime: 1000 * 60,
     gcTime: 1000 * 60 * 2,
   });

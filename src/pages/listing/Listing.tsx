@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import Heart from "@/components/Heart";
 import { Button } from "@/components/ui/button";
-
+import { getSingleListing } from "@/lib/api";
 import { useUser } from "@/contexts/userContext";
 
 export default function Listing() {
@@ -46,12 +46,9 @@ export default function Listing() {
     error,
   } = useQuery<TCar>({
     queryKey: ["car", id],
-    queryFn: async () => {
-      const response = await fetch(`/api/cars?id=${id}`);
-      const data = await response.json();
-      // setCenter([data.address.latitude, data.address.longitude]);
-      return data;
-    },
+    queryFn: () => getSingleListing(id!),
+    staleTime: 1000 * 60,
+    gcTime: 1000 * 60 * 2,
   });
 
   if (isLoading) return <div>Loading...</div>;

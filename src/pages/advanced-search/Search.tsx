@@ -5,19 +5,11 @@ import { carData, prices, years, body, fuel } from "../../lib/data";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSelect } from "../../components/form-elements";
-
-const FormSchema = z.object({
-  brand: z.string().optional(),
-  model: z.string().optional(),
-  price: z.string().optional(),
-  year: z.string().optional(),
-  body: z.string().optional(),
-  fuel: z.string().optional(),
-});
+import { AdvencedSearchSchema } from "../../lib/types/models";
 
 export default function AdvancedSearch() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof AdvencedSearchSchema>>({
+    resolver: zodResolver(AdvencedSearchSchema),
   });
 
   const carDataBrands = carData.map((car) => car.brand);
@@ -26,7 +18,7 @@ export default function AdvancedSearch() {
     ? carData.find((car) => car.brand === selectedBrand)?.models
     : [];
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = (data: z.infer<typeof AdvencedSearchSchema>) => {
     console.log(data);
   };
 

@@ -43,3 +43,34 @@ export const SellFormSchema = z.object({
   licencePlate: z.string({ required_error: "Licence Plate is required" }),
   mileage: z.string({ required_error: "Mileage is required" }),
 });
+
+export const SearchSchema = z.object({
+  brand: z.string({ required_error: "Brand is required" }),
+  model: z.string().optional(),
+  price: z.string().optional(),
+  year: z.string().optional(),
+});
+
+export const SidebarFormSchema = z.object({
+  brand: z.string().optional(),
+  model: z.string().optional(),
+  price: z.string().optional(),
+  year: z.string().optional(),
+  body: z.string().optional(),
+  fuel: z.string().optional(),
+  km: z.string().optional(),
+  transmission: z.string().optional(),
+  power: z.string().optional(),
+  door: z.string().optional(),
+  color: z.string().optional(),
+});
+
+export const AdvencedSearchSchema = z.object({
+  brand: z.string().optional(),
+  model: z.string().optional(),
+  price: z.string().optional(),
+  year: z.string().optional(),
+  body: z.string().optional(),
+  fuel: z.string().optional(),
+});
+

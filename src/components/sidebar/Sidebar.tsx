@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSelect } from "../../components/form-elements";
 import { X } from "lucide-react";
+import { SidebarFormSchema } from "../../lib/types/models";
+import { sidebarDefaultValues } from "../../lib/types/defaultValues";
+import { SetURLSearchParams } from "react-router-dom";
 import {
   carData,
   prices,
@@ -18,26 +21,11 @@ import {
 } from "../../lib/data";
 
 type Props = {
-  className?: string;
-  setSearchParams?: any;
-  searchParams?: any;
-  setSidebarOpen?: any;
-  sidebarOpen?: boolean;
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  sidebarOpen: boolean;
 };
-
-const FormSchema = z.object({
-  brand: z.string().optional(),
-  model: z.string().optional(),
-  price: z.string().optional(),
-  year: z.string().optional(),
-  body: z.string().optional(),
-  fuel: z.string().optional(),
-  km: z.string().optional(),
-  transmission: z.string().optional(),
-  power: z.string().optional(),
-  door: z.string().optional(),
-  color: z.string().optional(),
-});
 
 export function Sidebar({
   searchParams,
@@ -45,21 +33,9 @@ export function Sidebar({
   setSidebarOpen,
   sidebarOpen,
 }: Props) {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      brand: searchParams.get("brand") || "",
-      model: searchParams.get("model") || "",
-      price: searchParams.get("price") || "",
-      year: searchParams.get("year") || "",
-      body: searchParams.get("body") || "",
-      fuel: searchParams.get("fuel") || "",
-      km: searchParams.get("km") || "",
-      transmission: searchParams.get("transmission") || "",
-      power: searchParams.get("power") || "",
-      door: searchParams.get("door") || "",
-      color: searchParams.get("color") || "",
-    },
+  const form = useForm<z.infer<typeof SidebarFormSchema>>({
+    resolver: zodResolver(SidebarFormSchema),
+    defaultValues: sidebarDefaultValues(searchParams),
   });
 
   const carDataBrands = carData.map((car) => car.brand);
@@ -69,14 +45,12 @@ export function Sidebar({
     : [];
 
   const handleFormChange = () => {
-    return form.handleSubmit(() => {
-      const nonEmptyValues: any = Object.fromEntries(
-        Object.entries(form.getValues()).filter(([_, value]) => value)
-      );
-      setSearchParams(() => ({
-        ...nonEmptyValues,
-      }));
-    });
+    const nonEmptyValues: any = Object.fromEntries(
+      Object.entries(form.getValues()).filter(([_, value]) => value)
+    );
+    setSearchParams(() => ({
+      ...nonEmptyValues,
+    }));
   };
 
   return (
@@ -87,7 +61,7 @@ export function Sidebar({
       <Form {...form}>
         <form
           className="flex flex-col w-full gap-2 p-2"
-          onChange={handleFormChange()}
+          onChange={form.handleSubmit(handleFormChange)}
         >
           <FormSelect
             control={form.control}

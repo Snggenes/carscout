@@ -21,7 +21,7 @@ export function NavProfile() {
     return (
       <div className="flex flex-row items-center gap-4 justify-center">
         <div className="text-gray-500 hover:text-gray-600 cursor-pointer transition">
-          <Link to="/favorites">
+          <Link to="/account/favorites">
             <Star size={16} />
           </Link>
         </div>
