@@ -15,7 +15,7 @@ export function SaveQuery() {
 
   if (!user?.username) {
     return (
-      <div className="border w-full md:w-2/3  lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
+      <div className="border w-full lg:w-[620px] h-[180px] bg-white flex flex-col justify-between p-10 gap-8">
         <div className="flex flex-row items-center gap-8">
           <Car size={30} />
           <div>

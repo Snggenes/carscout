@@ -26,7 +26,7 @@ export function NavProfile() {
           </Link>
         </div>
         <div className="text-gray-500 hover:text-gray-600 cursor-pointer transition">
-          <Link to="/notifications">
+          <Link to="/account/notifications">
             <BellRing size={16} />
           </Link>
         </div>

@@ -6,6 +6,7 @@ export type User = {
   favorites: string[];
   lastSearch: string;
   lastSearchTime: Date;
+  notification: boolean;
 };
 
 export type Taddress = {

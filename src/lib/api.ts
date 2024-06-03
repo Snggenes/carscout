@@ -127,6 +127,7 @@ export async function getSingleListing(id: string) {
   }
   return response.json();
 }
+
 export async function postListing(
   data: FieldValues,
   image: string[],
@@ -148,4 +149,43 @@ export async function postListing(
     return toast.error(newCar.error);
   }
   toast.success(newCar.message);
+}
+
+export async function handleNotifications(
+  setUser: React.Dispatch<React.SetStateAction<User | null>>,
+  toast: any,
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  setIsDisabled(true);
+  const response = await fetch("/api/auth/notification", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+  const data = await response.json();
+  if (data.error) {
+    console.log(data.error);
+  }
+  setUser(data.safeUser);
+  setIsDisabled(false);
+  toast.info("Notification settings updated.");
+}
+
+export async function handleDeleteAccount(
+  navigate: NavigateFunction,
+  toast: any,
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
+) {
+  const response = await fetch("/api/auth/delete", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+  const data = await response.json();
+  if (data.error) {
+    return toast.error(data.error);
+  }
+  toast.info(data.message);
+  setUser(null);
+  navigate("/");
 }
