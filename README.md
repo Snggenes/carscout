@@ -1,3 +1,8 @@
+## Live Demo
+
+Check out the live demo of the project [here](https://carscout-rjs-ejs-2774c71ce9e3.herokuapp.com/).
+
+
 # CarsProject
 
 CarsProject is a full-stack web application similar to AutoScout, where users can search for cars, buy cars, and sell their cars. The application is built using React for the frontend and Node.js for the backend.
@@ -40,7 +45,3 @@ CarsProject is a full-stack web application similar to AutoScout, where users ca
 - Dotenv for environment variables
 
 For more details, check out the [backend repository](https://github.com/Snggenes/carscout-server).
-
-## Live Demo
-
-Check out the live demo of the project [here](https://carscout-rjs-ejs-2774c71ce9e3.herokuapp.com/).
