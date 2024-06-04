@@ -57,9 +57,6 @@ export function NavProfile() {
       >
         Sign In
       </Button>
-      <Button variant="ghost" asChild>
-        <Link to="/register">Sign Up</Link>
-      </Button>
     </div>
   );
 }

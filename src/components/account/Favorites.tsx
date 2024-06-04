@@ -31,7 +31,7 @@ export function Favorites() {
 
   if (user?.favorites.length === 0) {
     return (
-      <div className="bg-white w-full max-w-[1200px] flex flex-col lg:p-4 gap-4 mt-10 lg:mt-36">
+      <div className="bg-white w-full max-w-[1200px] flex flex-col lg:p-4 gap-4 mt-20 lg:mt-36">
         <div className="w-full flex justify-center">
           <h1 className="mt-8 lg:mt-4">My favorites is empty.</h1>
         </div>

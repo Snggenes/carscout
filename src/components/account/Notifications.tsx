@@ -9,7 +9,7 @@ export function Notifications() {
   const { user, setUser } = useUser();
 
   return (
-    <div className="pt-12 lg:pt-36 w-full flex flex-col">
+    <div className="pt-20 lg:pt-36 w-full flex flex-col">
       <div className="bg-white flex flex-col justify-center items-center gap-1 py-14">
         <h1 className="text-lg">We would like to stay in touch with you.</h1>
         <p className="text-sm font-light">

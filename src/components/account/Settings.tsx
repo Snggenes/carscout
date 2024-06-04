@@ -8,7 +8,7 @@ export function Settings() {
   const navigate = useNavigate();
   const { setUser } = useUser();
   return (
-    <div className="pt-12 lg:pt-36 w-full flex flex-col justify-center items-center">
+    <div className="pt-20 lg:pt-36 w-full flex flex-col justify-center items-center">
       <h1 className="p-8 bg-white w-full flex justify-center items-center text-lg">
         Manage your profile
       </h1>

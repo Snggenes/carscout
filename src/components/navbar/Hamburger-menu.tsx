@@ -1,37 +1,16 @@
-import { useUser } from "@/contexts/userContext";
-import { toast } from "react-toastify";
 import { Button } from "../../components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
-type ProfileMenuProps = {
+type Props = {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
-  const { setUser } = useUser();
+export const HamburgerMenu = ({ visible, setVisible }: Props) => {
   const navigate = useNavigate();
 
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const handleLogout = async () => {
-    const res = await fetch("/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-
-    if (data) {
-      setVisible(false);
-      toast.info("You are now logged out");
-      setUser(null);
-      navigate("/");
-    }
-  };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -56,85 +35,57 @@ export const ProfileMenu = ({ visible, setVisible }: ProfileMenuProps) => {
   return (
     <div ref={menuRef}>
       {visible ? (
-        <div className="bg-white w-60 z-50 absolute top-11 right-0 flex flex-col text-black shadow-xl rounded-xl">
+        <div className="bg-white w-60 z-50 absolute top-11 left-0 flex flex-col text-black shadow-xl rounded-xl">
           <div className="flex flex-col gap-3">
             <Button
               variant="link"
               className="font-lg"
               onClick={() => {
                 setVisible(false);
-                navigate("/account");
+                navigate("/");
               }}
             >
-              Overview
+              Home
             </Button>
             <Button
               variant="link"
               className="font-lg"
               onClick={() => {
                 setVisible(false);
-                navigate("/account/favorites");
+                navigate("/");
               }}
             >
-              Favorites
+              Search
             </Button>
             <Button
               variant="link"
               className="font-lg"
               onClick={() => {
                 setVisible(false);
-                navigate("/account/searches");
+                navigate("/sell");
               }}
             >
-              Saved searches
+              Sell
             </Button>
             <Button
               variant="link"
               className="font-lg"
               onClick={() => {
                 setVisible(false);
-                navigate("/account/listings");
+                navigate("/magazine");
               }}
             >
-              Advertisement
+              Magazine
             </Button>
             <Button
               variant="link"
               className="font-lg"
               onClick={() => {
                 setVisible(false);
-                navigate("/account/appointments");
+                navigate("/subscription");
               }}
             >
-              Fast sales appointments
-            </Button>
-            <Button
-              variant="link"
-              className="font-lg"
-              onClick={() => {
-                setVisible(false);
-                navigate("/account/notifications");
-              }}
-            >
-              Notifications
-            </Button>
-            <Button
-              variant="link"
-              className="font-lg"
-              onClick={() => {
-                setVisible(false);
-                navigate("/account/settings");
-              }}
-            >
-              Settings
-            </Button>
-            <hr />
-            <Button
-              variant="link"
-              className="font-lg"
-              onClick={handleLogout}
-            >
-              Logout
+              Subscription
             </Button>
           </div>
         </div>

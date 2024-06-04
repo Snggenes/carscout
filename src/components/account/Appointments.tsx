@@ -2,7 +2,7 @@ import { CarFront, Phone } from "lucide-react";
 import { Button } from "../ui/button";
 export function Appointments() {
   return (
-    <div className="pt-12 lg:pt-36 w-full flex flex-col">
+    <div className="pt-20 lg:pt-36 w-full flex flex-col">
       <div className="flex flex-col items-center gap-2 bg-white">
         <CarFront size={130} />
         <h1 className="text-xl font-semibold">Appointments in Carscout</h1>

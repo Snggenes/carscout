@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export function Listings() {
   const navigate = useNavigate();
   return (
-    <div className="pt-12 lg:pt-36 w-full px-4 flex flex-col gap-4">
+    <div className="pt-20 lg:pt-36 w-full px-4 flex flex-col gap-4">
       <div className="w-full flex flex-col md:flex-row gap-4">
         <div className="bg-white w-full md:w-1/2 flex justify-center items-center h-40">
           <div
