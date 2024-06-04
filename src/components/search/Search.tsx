@@ -12,8 +12,13 @@ import { useUser } from "../../contexts/userContext";
 
 import { SearchSchema } from "../../lib/types/models";
 import { mainPageSearch } from "../../lib/api";
+import { cn } from "@/lib/utils";
 
-export function Search() {
+type SearchProps = {
+  className?: string;
+};
+
+export function Search({ className = "" }: SearchProps) {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
@@ -33,57 +38,55 @@ export function Search() {
   });
 
   return (
-    <div className="relative w-full h-[220px] sm:h-[290px] md:h-[460px] xl:h-[520px] bg-[url('https://www.tweedehandsauto.nl/wp-content/uploads/2023/04/148881163_m-1568x1046.jpg')] bg-cover bg-center bg-no-repeat">
-      <div
-        className={`max-w-[1200px] hidden md:block absolute mt-4 bottom-10 px-4 md:xl-16 w-full`}
-      >
-        <div className="w-12 h-8 bg-white flex flex-row items-center justify-center rounded-t-lg">
+    <div className={cn(`max-w-[1200px] w-full ` + className)}>
+      <div className="w-12 h-8 bg-white flex flex-row items-center justify-center rounded-t-lg">
+        <div className="pl-4 pt-2 md:pl-0 md:pt-0">
           <Car size={30} />
         </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit((data) => mutate(data))}
-            className="p-6 gap-4 w-full lg:w-5/6 bg-white grid grid-cols-3"
-          >
-            <FormSelect
-              control={form.control}
-              name="brand"
-              placeholder="Brand"
-              defaultValues={carDataBrands}
-            />
-            <FormSelect
-              control={form.control}
-              name="model"
-              placeholder="Model"
-              defaultValues={selectedModel}
-            />
-            <FormSelect
-              control={form.control}
-              name="price"
-              placeholder="Price"
-              defaultValues={prices}
-            />
-            <FormSelect
-              control={form.control}
-              name="year"
-              placeholder="Year"
-              defaultValues={years}
-            />
-            <Button type="submit" variant="ghost">
-              Submit
-            </Button>
-            <Button
-              variant="link"
-              disabled
-              onClick={() => {
-                navigate("/advanced-search");
-              }}
-            >
-              Advanced Search
-            </Button>
-          </form>
-        </Form>
       </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit((data) => mutate(data))}
+          className="p-2 md:p-6 gap-2 md:gap-4 w-full  bg-white grid grid-cols-2 md:grid-cols-3 shadow-lg"
+        >
+          <FormSelect
+            control={form.control}
+            name="brand"
+            placeholder="Brand"
+            defaultValues={carDataBrands}
+          />
+          <FormSelect
+            control={form.control}
+            name="model"
+            placeholder="Model"
+            defaultValues={selectedModel}
+          />
+          <FormSelect
+            control={form.control}
+            name="price"
+            placeholder="Price"
+            defaultValues={prices}
+          />
+          <FormSelect
+            control={form.control}
+            name="year"
+            placeholder="Year"
+            defaultValues={years}
+          />
+          <Button
+            variant="link"
+            disabled
+            onClick={() => {
+              navigate("/advanced-search");
+            }}
+          >
+            Advanced Search
+          </Button>
+          <Button type="submit" variant="ghost" className="bg-yellow-300">
+            Show Results
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 }

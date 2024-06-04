@@ -67,7 +67,6 @@ export function Favorites() {
 
   return (
     <div className="flex flex-col items-center relative">
-      <h1 className="text-xl absolute left-4 top-8 lg:hidden">Favorites</h1>
       <div className="w-full max-w-[1200px] flex flex-col lg:p-4 gap-4 mt-20 lg:mt-32">
         {cars.data.map((car: TCar) => (
           <Car key={car._id} car={car} />

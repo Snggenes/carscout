@@ -12,6 +12,7 @@ import { Searches } from "./components/account/Searches";
 import { Listings } from "./components/account/Listings";
 import { Notifications } from "./components/account/Notifications";
 import { Settings } from "./components/account/Settings";
+import { RemoveAccount } from "./components/account/RemoveAccount";
 import Account from "./pages/account/Account";
 import List from "./pages/list/List";
 import Sell from "./pages/sell/Sell";
@@ -44,7 +45,9 @@ export default function App() {
               <Route path="listings" element={<Listings />} />
               <Route path="notifications" element={<Notifications />} />
               <Route path="searches" element={<Searches />} />
-              <Route path="settings" element={<Settings />} />
+              <Route path="settings" element={<Settings />} >
+                <Route path="remove-account" element={<RemoveAccount />} />
+              </Route>
             </Route>
           </Routes>
         </div>

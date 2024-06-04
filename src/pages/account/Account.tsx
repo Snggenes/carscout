@@ -18,7 +18,7 @@ export default function Account() {
 
   return (
     <div className="pt-16 w-full flex flex-col items-center">
-      <h1 className="absolute left-5 top-24 text-2xl lg:hidden">
+      <h1 className="block lg:hidden absolute left-5 top-24 text-2xl ">
         My Carscout
       </h1>
       <div className="min-h-screen w-full max-w-[1200px] grid grid-cols-8 gap-4">

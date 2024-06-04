@@ -45,7 +45,7 @@ export function Car({ car, mainPage }: Props) {
 
   if (mainPage) {
     return (
-      <div className="border p-2 flex justify-center flex-col">
+      <div className="border py-2 flex justify-center flex-col">
         <Carousel className="cursor-pointer">
           <CarouselContent>
             {car?.image.map((image: any, index: any) => (
