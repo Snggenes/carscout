@@ -189,3 +189,14 @@ export async function handleDeleteAccount(
   setUser(null);
   navigate("/");
 }
+
+export async function checkLicencePlate(licencePlate: string, toast: any) {
+  const response = await fetch(
+    `/api/licenceplatecheck?licencePlate=${licencePlate}`
+  );
+  if (!response.ok) {
+    return toast.error("Licence plate not found");
+  }
+  const data = await response.json();
+  return data;
+}

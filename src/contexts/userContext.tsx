@@ -16,7 +16,6 @@ export default function UserProvider({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log(user);
 
   const performFetch = async () => {
     try {
