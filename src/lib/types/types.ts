@@ -42,3 +42,15 @@ export type TCar = {
   createdAt: Date;
   address: Taddress;
 };
+
+export type TCarCheck = {
+  kenteken: string;
+  merk: string;
+  handelsbenaming: string;
+  inrichting: string;
+  aantal_zitplaatsen: number;
+  eerste_kleur: string;
+  cilinderinhoud: string;
+  datum_eerste_toelating: string;
+  aantal_deuren: string;
+}

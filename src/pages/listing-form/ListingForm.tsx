@@ -7,28 +7,22 @@ import { Form } from "../../components/ui/form";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ListingFormSchema } from "../../lib/types/models";
-import { FormSelect, FormInput } from "../../components/form-elements";
 import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
-import { CardDescription, CardTitle } from "../../components/ui/card";
 import { listingFormDefaultValues } from "@/lib/types/defaultValues";
-import { UploadWidget } from "@/components/image-upload/UploadWidget";
 import { toast } from "react-toastify";
 import { postListing } from "@/lib/api";
-import {
-  carData,
-  body,
-  seats,
-  doors,
-  colors,
-  upholstery,
-  condition,
-  years,
-  fuel,
-  prices,
-  transmission,
-  power,
-} from "../../lib/data";
+import { checkLicencePlate } from "@/lib/api";
+import { ListingFormSidebar } from "./ListingFormSidebar";
+import { TCarCheck } from "@/lib/types/types";
+import { roundAndConvert } from "@/lib/helpers";
+import { VehicleData } from "./form-components/VehicleData";
+import { Characteristics } from "./form-components/Characteristics";
+import { Price } from "./form-components/Price";
+import { Photos } from "./form-components/Photos";
+import { Contact } from "./form-components/Contact";
+import { Particularities } from "./form-components/Particularities";
+import { Engine } from "./form-components/Engine";
+import { Condition } from "./form-components/Condition";
 
 export default function ListingForm() {
   const [searchParams] = useSearchParams();
@@ -37,12 +31,24 @@ export default function ListingForm() {
   const navigate = useNavigate();
   const licencePlate = searchParams.get("licencePlate")?.toUpperCase();
   const km = searchParams.get("mileage");
+  const [car, setCar] = useState<TCarCheck | null>();
+
+  async function getCar(licencePlate: string) {
+    const response = await checkLicencePlate(licencePlate, toast);
+    setCar(response);
+  }
 
   useEffect(() => {
     if (!licencePlate || !km) {
       navigate("/sell");
     }
   }, []);
+
+  useEffect(() => {
+    if (licencePlate) {
+      getCar(licencePlate);
+    }
+  }, [licencePlate]);
 
   const form = useForm<z.infer<typeof ListingFormSchema>>({
     resolver: zodResolver(ListingFormSchema),
@@ -53,11 +59,6 @@ export default function ListingForm() {
     },
   });
 
-  const selectedBrand = form.watch("brand");
-  const selectedModel = selectedBrand
-    ? carData.find((car) => car.brand === selectedBrand)?.models
-    : [];
-
   const { mutate } = useMutation({
     mutationFn: (data: FieldValues) => postListing(data, image, toast),
     onSuccess: () => {
@@ -67,198 +68,36 @@ export default function ListingForm() {
   });
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="max-w-[1200px] flex-1 flex flex-col md:flex-row md:gap-8">
-        <div className="bg-white hidden md:flex md:flex-none md:w-[360px]">
-          {licencePlate}/{km}
+    <div className="pt-16 w-full flex flex-col items-center">
+      <div className="mt-10 w-full max-w-[1200px] px-10">
+        {car?.merk} {car?.handelsbenaming}{" "}
+        {roundAndConvert(Number(car?.cilinderinhoud))}
+      </div>
+      <div className="min-h-screen w-full max-w-[1200px] grid grid-cols-8 gap-4">
+        <div className="w-full hidden lg:block lg:col-span-2">
+          <ListingFormSidebar />
         </div>
-        <div className="bg-white flex-1 p-4 border rounded-md">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit((data) => mutate(data))}
-              className="w-2/3 space-y-8"
-            >
-              <div id="1" className="space-y-4">
-                <CardTitle className="mb-6">Car Details</CardTitle>
-                <div>
-                  <CardDescription>Brand</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="brand"
-                    placeholder="Brand"
-                    defaultValues={carData.map((car) => car.brand)}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Model</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="model"
-                    placeholder="Model"
-                    defaultValues={selectedModel}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Licence Plate</CardDescription>
-
-                  <FormInput
-                    control={form.control}
-                    registerName="licencePlate"
-                    registerString="Licence Plate"
-                  />
-                </div>
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Characteristics</CardTitle>
-                <div>
-                  <CardDescription>Body</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="body"
-                    placeholder="Body"
-                    defaultValues={body}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Seats</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="seat"
-                    placeholder="Seats"
-                    defaultValues={seats}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Doors</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="door"
-                    placeholder="Doors"
-                    defaultValues={doors}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Color</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="color"
-                    placeholder="Color"
-                    defaultValues={colors}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Upholstery</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="upholstery"
-                    placeholder="Upholstery"
-                    defaultValues={upholstery}
-                  />
-                </div>
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Transmission</CardTitle>
-                <FormSelect
-                  control={form.control}
-                  name="transmission"
-                  placeholder="Transmission"
-                  defaultValues={transmission}
-                />
-                <FormSelect
-                  control={form.control}
-                  name="power"
-                  placeholder="Power"
-                  defaultValues={power}
-                />
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Condition of the car</CardTitle>
-                <div>
-                  <CardDescription>Condition</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="condition"
-                    placeholder="Condition"
-                    defaultValues={condition}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Mileage</CardDescription>
-
-                  <FormInput
-                    control={form.control}
-                    registerName="km"
-                    registerString="Km"
-                  />
-                </div>
-                <div>
-                  <CardDescription>Year</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="year"
-                    placeholder="Year"
-                    defaultValues={years}
-                  />
-                </div>
-                <div>
-                  <CardDescription>Fuel</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="fuel"
-                    placeholder="Fuel"
-                    defaultValues={fuel}
-                  />
-                </div>
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Price</CardTitle>
-                <div>
-                  <CardDescription>Price</CardDescription>
-                  <FormSelect
-                    control={form.control}
-                    name="price"
-                    placeholder="Price"
-                    defaultValues={prices}
-                  />
-                </div>
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Images</CardTitle>
-                <UploadWidget setImage={setImage} />
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Description</CardTitle>
-                <Textarea
-                  className="w-full"
-                  placeholder="Description"
-                  {...form.register("description")}
-                />
-              </div>
-              <div id="1" className="space-y-4 border-b">
-                <CardTitle className="mb-6">Contact</CardTitle>
-
-                <FormInput
-                  control={form.control}
-                  registerName="postcode"
-                  registerString="Postcode"
-                />
-                <FormInput
-                  control={form.control}
-                  registerName="phone"
-                  registerString="Phone"
-                />
-                <FormInput
-                  control={form.control}
-                  registerName="houseNumber"
-                  registerString="House Number"
-                />
-              </div>
-
-              <Button variant="ghost" className="mt-4">
-                Place Advertisement
-              </Button>
-            </form>
-          </Form>
+        <div className="w-full col-span-8 lg:col-span-6">
+          <div className="flex flex-col justify-center items-center ">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit((data) => mutate(data))}
+                className="space-y-8 bg-white w-full m-8 px-2 sm:px-10 lg:px-20 pt-12"
+              >
+                <VehicleData form={form} />
+                <Characteristics form={form} />
+                <Engine form={form} />
+                <Condition form={form} />
+                <Price form={form} />
+                <Photos setImage={setImage} />
+                <Particularities form={form} />
+                <Contact form={form} />
+                <Button variant="ghost" className="mt-4">
+                  Place Advertisement
+                </Button>
+              </form>
+            </Form>
+          </div>
         </div>
       </div>
     </div>
