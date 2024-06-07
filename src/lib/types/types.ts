@@ -44,13 +44,16 @@ export type TCar = {
 };
 
 export type TCarCheck = {
+  type_carrosserie_europese_omschrijving: string;
   kenteken: string;
   merk: string;
   handelsbenaming: string;
   inrichting: string;
-  aantal_zitplaatsen: number;
+  aantal_zitplaatsen: string;
   eerste_kleur: string;
   cilinderinhoud: string;
   datum_eerste_toelating: string;
   aantal_deuren: string;
+  brandstof_omschrijving: string;
+  nettomaximumvermogen: string;
 }

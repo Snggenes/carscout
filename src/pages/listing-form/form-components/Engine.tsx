@@ -1,6 +1,6 @@
-import { FormSelect } from "@/components/form-elements";
-import { CardTitle } from "@/components/ui/card";
-import { transmission, power } from "@/lib/data";
+import { FormInput, FormSelect } from "@/components/form-elements";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import { transmission } from "@/lib/data";
 
 type EngineProps = {
   form: any;
@@ -16,12 +16,21 @@ export function Engine({ form }: EngineProps) {
         placeholder="Transmission"
         defaultValues={transmission}
       />
-      <FormSelect
+      {/* <FormSelect
         control={form.control}
         name="power"
         placeholder="Power"
         defaultValues={power}
-      />
+      /> */}
+      <div>
+        <CardDescription>Power</CardDescription>
+
+        <FormInput
+          control={form.control}
+          registerName="power"
+          registerString="Power"
+        />
+      </div>
     </div>
   );
 }

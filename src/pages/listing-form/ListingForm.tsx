@@ -14,7 +14,6 @@ import { postListing } from "@/lib/api";
 import { checkLicencePlate } from "@/lib/api";
 import { ListingFormSidebar } from "./ListingFormSidebar";
 import { TCarCheck } from "@/lib/types/types";
-import { roundAndConvert } from "@/lib/helpers";
 import { VehicleData } from "./form-components/VehicleData";
 import { Characteristics } from "./form-components/Characteristics";
 import { Price } from "./form-components/Price";
@@ -26,11 +25,12 @@ import { Condition } from "./form-components/Condition";
 
 export default function ListingForm() {
   const [searchParams] = useSearchParams();
+  const searchParamsObject = Object.fromEntries([...searchParams.entries()]);
+
   const [image, setImage] = useState([]);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const licencePlate = searchParams.get("licencePlate")?.toUpperCase();
-  const km = searchParams.get("mileage");
+  const { mileage: km, licencePlate } = searchParamsObject;
   const [car, setCar] = useState<TCarCheck | null>();
 
   async function getCar(licencePlate: string) {
@@ -50,11 +50,31 @@ export default function ListingForm() {
     }
   }, [licencePlate]);
 
+  useEffect(() => {
+    if (car) {
+      form.reset({
+        licencePlate: licencePlate,
+        km: km,
+        brand: car.merk || "",
+        model: car.handelsbenaming || "",
+        body: car.type_carrosserie_europese_omschrijving || "",
+        seat: car.aantal_zitplaatsen || undefined,
+        door: car.aantal_deuren || undefined,
+        fuel: car.brandstof_omschrijving || "",
+        power: (Number(car?.nettomaximumvermogen)).toString() || undefined,
+        
+        ...listingFormDefaultValues,
+      });
+    }
+  }, [car]);
+
   const form = useForm<z.infer<typeof ListingFormSchema>>({
     resolver: zodResolver(ListingFormSchema),
     defaultValues: {
       licencePlate: licencePlate || undefined,
       km: km || undefined,
+      brand: "",
+      model: "",
       ...listingFormDefaultValues,
     },
   });
@@ -69,9 +89,8 @@ export default function ListingForm() {
 
   return (
     <div className="pt-16 w-full flex flex-col items-center">
-      <div className="mt-10 w-full max-w-[1200px] px-10">
-        {car?.merk} {car?.handelsbenaming}{" "}
-        {roundAndConvert(Number(car?.cilinderinhoud))}
+      <div className="mt-10 w-full max-w-[1200px] px-10 text-3xl">
+        {car ? `${car.merk} ${car.handelsbenaming}` : "---"}
       </div>
       <div className="min-h-screen w-full max-w-[1200px] grid grid-cols-8 gap-4">
         <div className="w-full hidden lg:block lg:col-span-2">

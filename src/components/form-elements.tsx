@@ -3,6 +3,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../components/ui/form";
 import {
@@ -12,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 // type FormInputProps = {
 //   register: any;
@@ -107,8 +109,12 @@ type FormInputProps = {
   typeInput?: string;
 };
 
-
-export function FormInput({ control, registerName, registerString, typeInput }: FormInputProps) {
+export function FormInput({
+  control,
+  registerName,
+  registerString,
+  typeInput,
+}: FormInputProps) {
   return (
     <>
       <FormField
@@ -117,7 +123,61 @@ export function FormInput({ control, registerName, registerString, typeInput }: 
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input type={typeInput || "text"} placeholder={registerString} {...field} />
+              <Input
+                type={typeInput || "text"}
+                placeholder={registerString}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
+}
+
+type formRadioProps = {
+  form: any;
+  defaultValues: string[];
+  registerName: string;
+};
+
+export function FormRadio({
+  form,
+  defaultValues,
+  registerName,
+}: formRadioProps) {
+  return (
+    <>
+      <FormField
+        control={form.control}
+        name={registerName}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-4"
+              >
+                {defaultValues.map((defaultValue: string) => (
+                  <>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem
+                          key={defaultValue}
+                          value={defaultValue}
+                          className="w-6 h-6 border-double"
+                        />
+                      </FormControl>
+                      <FormLabel className="font-normal">
+                        {defaultValue}
+                      </FormLabel>
+                    </FormItem>
+                  </>
+                ))}
+              </RadioGroup>
             </FormControl>
             <FormMessage />
           </FormItem>

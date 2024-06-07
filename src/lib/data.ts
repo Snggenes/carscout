@@ -1894,6 +1894,7 @@ export const colors = [
   "Silver",
   "White",
   "Yellow",
+  "Other",
 ];
 export const seats = [
   "2",
@@ -1915,4 +1916,4 @@ export const upholstery = [
   "Other",
 ];
 
-export const condition = ["New", "Used"];
+export const condition = [ "Used", "OldTimer", "New"];

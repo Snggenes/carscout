@@ -1,6 +1,6 @@
-import { FormSelect } from "@/components/form-elements";
+import { FormInput, FormSelect, FormRadio } from "@/components/form-elements";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { body, seats, doors, colors, upholstery } from "@/lib/data";
+import { colors, upholstery } from "@/lib/data";
 
 type CharacteristicsProps = {
   form: any;
@@ -14,39 +14,34 @@ export function Characteristics({ form }: CharacteristicsProps) {
       </CardTitle>
       <div>
         <CardDescription>Body</CardDescription>
-        <FormSelect
+
+        <FormInput
           control={form.control}
-          name="body"
-          placeholder="Body"
-          defaultValues={body}
+          registerName="body"
+          registerString="Body"
         />
       </div>
       <div>
         <CardDescription>Seats</CardDescription>
-        <FormSelect
+
+        <FormInput
           control={form.control}
-          name="seat"
-          placeholder="Seats"
-          defaultValues={seats}
+          registerName="seat"
+          registerString="Seats"
         />
       </div>
       <div>
         <CardDescription>Doors</CardDescription>
-        <FormSelect
+
+        <FormInput
           control={form.control}
-          name="door"
-          placeholder="Doors"
-          defaultValues={doors}
+          registerName="door"
+          registerString="Doors"
         />
       </div>
       <div>
-        <CardDescription>Color</CardDescription>
-        <FormSelect
-          control={form.control}
-          name="color"
-          placeholder="Color"
-          defaultValues={colors}
-        />
+        <CardDescription className="mb-2">Color</CardDescription>
+        <FormRadio form={form} defaultValues={colors} registerName="color"/>
       </div>
       <div>
         <CardDescription>Upholstery</CardDescription>

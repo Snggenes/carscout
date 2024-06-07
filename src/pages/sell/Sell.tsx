@@ -54,12 +54,14 @@ export default function Sell() {
       data.licencePlate.toUpperCase(),
       toast
     );
-    console.log(response);
 
     if (response.length === 0) {
       return toast.error("Licence plate not found");
     } else {
-      setCarData(data);
+      setCarData({
+        ...data,
+        licencePlate: data.licencePlate.toUpperCase(),
+      });
       setIsNextClicked(true);
     }
   };
