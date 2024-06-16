@@ -1916,4 +1916,12 @@ export const upholstery = [
   "Other",
 ];
 
-export const condition = [ "Used", "OldTimer", "New"];
+export const condition = [ "Used", "OldTimer"];
+
+export const drive = ["Front", "Rear", "4x4"];
+
+export const gears = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const energyLabel = ["Normal/Benzin 91","Super 95", "Super Plus 98","Benzine E10 91", "Benzine E10 95", "Benzine E10 98", "Super Plus E10 98"];
+
+export const emissionClass = ["Euro 1", "Euro 2", "Euro 3", "Euro 4", "Euro 5", "Euro 6", "Euro 6d-TEMP", "Euro 6d", "Euro 6c", "Euro 6b", "Euro 6e"];

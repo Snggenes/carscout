@@ -1,4 +1,4 @@
-import { FormInput, FormSelect, FormRadio } from "@/components/form-elements";
+import { FormInput, FormRadio, FormCheckBox } from "@/components/form-elements";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { colors, upholstery } from "@/lib/data";
 
@@ -8,13 +8,12 @@ type CharacteristicsProps = {
 
 export function Characteristics({ form }: CharacteristicsProps) {
   return (
-    <div className="space-y-4 border-b">
+    <div className="space-y-4">
       <CardTitle className="mb-6 font-normal text-xl">
         Characteristics
       </CardTitle>
       <div>
         <CardDescription>Body</CardDescription>
-
         <FormInput
           control={form.control}
           registerName="body"
@@ -23,7 +22,6 @@ export function Characteristics({ form }: CharacteristicsProps) {
       </div>
       <div>
         <CardDescription>Seats</CardDescription>
-
         <FormInput
           control={form.control}
           registerName="seat"
@@ -32,7 +30,6 @@ export function Characteristics({ form }: CharacteristicsProps) {
       </div>
       <div>
         <CardDescription>Doors</CardDescription>
-
         <FormInput
           control={form.control}
           registerName="door"
@@ -41,16 +38,28 @@ export function Characteristics({ form }: CharacteristicsProps) {
       </div>
       <div>
         <CardDescription className="mb-2">Color</CardDescription>
-        <FormRadio form={form} defaultValues={colors} registerName="color"/>
+        <FormRadio form={form} defaultValues={colors} registerName="color" />
       </div>
       <div>
-        <CardDescription>Upholstery</CardDescription>
-        <FormSelect
-          control={form.control}
-          name="upholstery"
-          placeholder="Upholstery"
+        <div className="py-4">
+          <FormCheckBox
+            form={form}
+            registerName="metallic"
+            registerString="Metallic"
+          />
+        </div>
+      </div>
+      <div>
+        <CardDescription className="mb-2">Upholstery</CardDescription>
+        <FormRadio
+          form={form}
           defaultValues={upholstery}
+          registerName="upholstery"
         />
+      </div>
+      <div>
+        <CardDescription className="mb-2">Interior Color</CardDescription>
+        <FormRadio form={form} defaultValues={colors} registerName="interior" />
       </div>
     </div>
   );

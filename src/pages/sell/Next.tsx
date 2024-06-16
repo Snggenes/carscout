@@ -8,11 +8,12 @@ import { createSearchParams } from "react-router-dom";
 type NextProps = {
   setisClicked: React.Dispatch<React.SetStateAction<boolean>>;
   carData: any;
+  brand: string;
+  model: string;
 };
 
-export function Next({ setisClicked, carData }: NextProps) {
+export function Next({ setisClicked, carData, brand, model }: NextProps) {
   const navigate = useNavigate();
-  console.log(carData);
   return (
     <Card className="w-full flex flex-col items-center md:w-2/3 max-w-[660px] h-full shadow-2xl relative">
       <div
@@ -26,7 +27,7 @@ export function Next({ setisClicked, carData }: NextProps) {
       </div>
       <h1 className="pt-16 font-semibold text-xl">Options for you</h1>
       <h1 className="text-xl pb-8 pt-4">
-        {carData.brand} {carData.model}
+        {brand} {model}
       </h1>
       <div className="flex flex-col md:flex-row gap-4 w-full px-4">
         <div className="w-full md:w-1/2 md:h-[360px] flex flex-col gap-4 px-4 lg:px-8 border mb-6">

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { Form } from "../../components/ui/form";
 import { FieldValues, useForm } from "react-hook-form";
@@ -22,13 +23,15 @@ import { Contact } from "./form-components/Contact";
 import { Particularities } from "./form-components/Particularities";
 import { Engine } from "./form-components/Engine";
 import { Condition } from "./form-components/Condition";
+import { capitalizeFirstLetter } from "@/lib/helpers";
+import { Environment } from "./form-components/Environment";
 
 export default function ListingForm() {
   const [searchParams] = useSearchParams();
   const searchParamsObject = Object.fromEntries([...searchParams.entries()]);
 
   const [image, setImage] = useState([]);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mileage: km, licencePlate } = searchParamsObject;
   const [car, setCar] = useState<TCarCheck | null>();
@@ -55,14 +58,17 @@ export default function ListingForm() {
       form.reset({
         licencePlate: licencePlate,
         km: km,
-        brand: car.merk || "",
-        model: car.handelsbenaming || "",
+        brand: capitalizeFirstLetter(car.merk) || "",
+        model: capitalizeFirstLetter(car.handelsbenaming) || "",
         body: car.type_carrosserie_europese_omschrijving || "",
         seat: car.aantal_zitplaatsen || undefined,
         door: car.aantal_deuren || undefined,
         fuel: car.brandstof_omschrijving || "",
-        power: (Number(car?.nettomaximumvermogen)).toString() || undefined,
-        
+        power: Number(car?.nettomaximumvermogen).toString() || undefined,
+        year: car.datum_eerste_toelating.substring(0, 4) || "",
+        cilinders: car.aantal_cilinders || undefined,
+        cilinderCapacity: car.cilinderinhoud || undefined,
+        emptyWeight: car.massa_ledig_voertuig || undefined,
         ...listingFormDefaultValues,
       });
     }
@@ -81,42 +87,60 @@ export default function ListingForm() {
 
   const { mutate } = useMutation({
     mutationFn: (data: FieldValues) => postListing(data, image, toast),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cars"] });
-      navigate("/");
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["cars"] });
+    //   navigate("/");
+    // },
   });
+
+  console.log(car);
+
+  if (!car) {
+    return <div className="pt-16">Loading...</div>;
+  }
 
   return (
     <div className="pt-16 w-full flex flex-col items-center">
       <div className="mt-10 w-full max-w-[1200px] px-10 text-3xl">
-        {car ? `${car.merk} ${car.handelsbenaming}` : "---"}
+        {car ? `${capitalizeFirstLetter(car.merk)} ${capitalizeFirstLetter(car.handelsbenaming)}` : "---"}
       </div>
       <div className="min-h-screen w-full max-w-[1200px] grid grid-cols-8 gap-4">
-        <div className="w-full hidden lg:block lg:col-span-2">
+        <div className="w-full hidden md:block md:col-span-3">
           <ListingFormSidebar />
         </div>
-        <div className="w-full col-span-8 lg:col-span-6">
+        <div className="w-full col-span-8 md:col-span-5">
           <div className="flex flex-col justify-center items-center ">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit((data) => mutate(data))}
-                className="space-y-8 bg-white w-full m-8 px-2 sm:px-10 lg:px-20 pt-12"
-              >
+              <form className="space-y-14 bg-white w-full m-8 px-2 sm:px-10 lg:px-20 pt-12">
                 <VehicleData form={form} />
                 <Characteristics form={form} />
-                <Engine form={form} />
                 <Condition form={form} />
-                <Price form={form} />
+                <Engine form={form} />
+                <Environment form={form} />
                 <Photos setImage={setImage} />
                 <Particularities form={form} />
+                <Price form={form} />
                 <Contact form={form} />
-                <Button variant="ghost" className="mt-4">
-                  Place Advertisement
-                </Button>
               </form>
             </Form>
           </div>
+        </div>
+      </div>
+      <div className="bg-white flex flex-col md:flex-row md:gap-4 justify-between items-center md:pr-10 w-full sticky bottom-0">
+        <p className=" text-sm md:pl-4">
+          Please check all information before posting your ad online.
+        </p>
+        <div className="flex flex-col md:flex-row md:gap-4 items-center">
+          <Button variant="ghost" className="mt-4 mb-2 text-blue-800">
+            Save as draft
+          </Button>
+          <Button
+            variant="ghost"
+            className="mt-4 bg-yellow-300 mb-2"
+            onClick={form.handleSubmit((data) => mutate(data))}
+          >
+            Place Advertisement
+          </Button>
         </div>
       </div>
     </div>

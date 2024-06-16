@@ -26,6 +26,11 @@ export const ListingFormSchema = z.object({
   description: z.string().optional(),
   transmission: z.string({ required_error: "Transmission is required" }),
   power: z.string({ required_error: "Power is required" }),
+  metallic: z.boolean().default(false),
+  interior: z.string({ required_error: "Interior Color is required" }),
+  cilinders: z.string({ required_error: "Cilinders is required" }),
+  cilinderCapacity: z.string({ required_error: "Cilinder capacity is required" }),
+  emptyWeight: z.string({ required_error: "Empty weight is required" }),
 });
 
 export const LoginFormSchema = z.object({

@@ -1,6 +1,5 @@
-import { FormSelect } from "@/components/form-elements";
+import { FormCheckBox, FormInput } from "@/components/form-elements";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { prices } from "@/lib/data";
 
 type PriceProps = {
   form: any;
@@ -8,17 +7,32 @@ type PriceProps = {
 
 export function Price({ form }: PriceProps) {
   return (
-    <div className="space-y-4 border-b">
+    <div className="space-y-4">
       <CardTitle className="mb-6 font-normal text-xl">Price</CardTitle>
       <div>
-        <CardDescription>Price</CardDescription>
-        <FormSelect
+        <CardDescription className="mb-1">Price</CardDescription>
+        <FormInput
           control={form.control}
-          name="price"
-          placeholder="Price"
-          defaultValues={prices}
+          registerName="price"
+          registerString="Please enter"
+          typeInput="number"
         />
       </div>
+      <div>
+        <FormCheckBox
+          form={form}
+          registerName="negotiable"
+          registerString="Negotiable"
+        />
+      </div>
+      <div>
+        <FormCheckBox
+          form={form}
+          registerName="taxDeductible"
+          registerString="Tax deductible"
+        />
+      </div>
+      <p className="text-sm font-light">Required field</p>
     </div>
   );
 }

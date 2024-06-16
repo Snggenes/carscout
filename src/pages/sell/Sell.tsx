@@ -28,6 +28,8 @@ export default function Sell() {
 
   const [isNextClicked, setIsNextClicked] = useState(false);
   const [carData, setCarData] = useState<FieldValues>();
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
 
   useEffect(() => {
     if (!user?.username) {
@@ -62,6 +64,11 @@ export default function Sell() {
         ...data,
         licencePlate: data.licencePlate.toUpperCase(),
       });
+      setBrand(response.merk);
+      console.log(response.merk);
+      
+      setModel(response.handelsbenaming);
+      console.log(response.handelsbenaming);
       setIsNextClicked(true);
     }
   };
@@ -138,7 +145,12 @@ export default function Sell() {
             </CardContent>
           </Card>
         ) : (
-          <Next setisClicked={setIsNextClicked} carData={carData} />
+          <Next
+            setisClicked={setIsNextClicked}
+            carData={carData}
+            brand={brand}
+            model={model}
+          />
         )}
       </div>
       <AdInfo isNextClicked={isNextClicked} />

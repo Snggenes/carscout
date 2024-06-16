@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Fragment } from "react/jsx-runtime";
+import { Checkbox } from "./ui/checkbox";
 
 // type FormInputProps = {
 //   register: any;
@@ -107,6 +109,7 @@ type FormInputProps = {
   registerName: string;
   registerString: string;
   typeInput?: string;
+  readOnly?: boolean;
 };
 
 export function FormInput({
@@ -114,6 +117,7 @@ export function FormInput({
   registerName,
   registerString,
   typeInput,
+  readOnly,
 }: FormInputProps) {
   return (
     <>
@@ -124,6 +128,7 @@ export function FormInput({
           <FormItem>
             <FormControl>
               <Input
+                readOnly={readOnly}
                 type={typeInput || "text"}
                 placeholder={registerString}
                 {...field}
@@ -141,12 +146,14 @@ type formRadioProps = {
   form: any;
   defaultValues: string[];
   registerName: string;
+  className?: string;
 };
 
 export function FormRadio({
   form,
   defaultValues,
   registerName,
+  className,
 }: formRadioProps) {
   return (
     <>
@@ -159,10 +166,10 @@ export function FormRadio({
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-4"
+                className={className ? className : "grid grid-cols-2 gap-4"}
               >
                 {defaultValues.map((defaultValue: string) => (
-                  <>
+                  <Fragment key={defaultValue}>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
                         <RadioGroupItem
@@ -175,11 +182,45 @@ export function FormRadio({
                         {defaultValue}
                       </FormLabel>
                     </FormItem>
-                  </>
+                  </Fragment>
                 ))}
               </RadioGroup>
             </FormControl>
             <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
+}
+
+type FormCheckBoxProps = {
+  form: any;
+  registerName: string;
+  registerString: string;
+};
+
+export function FormCheckBox({
+  form,
+  registerName,
+  registerString,
+}: FormCheckBoxProps) {
+  return (
+    <>
+      <FormField
+        control={form.control}
+        name={registerName}
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md">
+            <FormControl className="w-6 h-6">
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+            <div className="space-y-1 leading-none">
+              <FormLabel className="font-normal">{registerString}</FormLabel>
+            </div>
           </FormItem>
         )}
       />

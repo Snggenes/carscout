@@ -56,4 +56,6 @@ export type TCarCheck = {
   aantal_deuren: string;
   brandstof_omschrijving: string;
   nettomaximumvermogen: string;
+  aantal_cilinders: string;
+  massa_ledig_voertuig: string;
 }

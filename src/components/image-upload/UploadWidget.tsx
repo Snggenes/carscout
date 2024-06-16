@@ -56,7 +56,8 @@ export function UploadWidget({ setImage }: Props) {
   return (
     <div>
       <Button
-        variant="secondary"
+        className="m-0"
+        variant="ghost"
         onClick={(e) => {
           e.preventDefault();
           // @ts-ignore

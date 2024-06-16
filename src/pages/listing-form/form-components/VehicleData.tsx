@@ -16,6 +16,7 @@ export function VehicleData({ form }: VehicleDataProps) {
           control={form.control}
           registerName="brand"
           registerString="Brand"
+          readOnly={true}
         />
       </div>
       <div>
