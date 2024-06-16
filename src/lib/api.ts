@@ -149,8 +149,9 @@ export async function postListing(
   //   return toast.error(newCar.error);
   // }
   // toast.success(newCar.message);
+  console.log(image);
+  console.log(toast);
   console.log(data);
-  
 }
 
 export async function handleNotifications(
