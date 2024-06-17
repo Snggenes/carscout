@@ -19,7 +19,7 @@ export function NavProfile() {
 
   if (user?.username) {
     return (
-      <div className="flex flex-row items-center gap-4 justify-center">
+      <div className="flex flex-row items-center gap-4 justify-center pr-4">
         <div className="text-gray-500 hover:text-gray-600 cursor-pointer transition">
           <Link to="/account/favorites">
             <Star size={16} />
@@ -30,7 +30,7 @@ export function NavProfile() {
             <BellRing size={16} />
           </Link>
         </div>
-        <div className="flex flex-row items-center gap-2 cursor-pointer relative">
+        <div className="hidden lg:flex flex-row items-center gap-2 cursor-pointer relative">
           <Avatar>
             <AvatarImage
               src="/profile.jpg"
