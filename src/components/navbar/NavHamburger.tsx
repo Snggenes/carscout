@@ -64,46 +64,62 @@ export function NavHamburger({ visible, setVisible }: Props) {
         </p>
       </div>
       <div className="mx-4 w-full bg-white flex flex-col">
-        <div className="flex flex-row justify-between p-4 pr-16 border"
-            onClick={() => {
-                navigate("/");
-                setVisible(false);
-            }}
+        <div
+          className="flex flex-row justify-between p-4 pr-16 border"
+          onClick={() => {
+            navigate("/");
+            setVisible(false);
+          }}
         >
           <p className="text-black">Search</p>
           <p className="font-semibold text-black">
             <ArrowRight />
           </p>
         </div>
-        <div className="flex flex-row justify-between p-4 pr-16 border-b"
-            onClick={() => {
-                navigate("/sell");
-                setVisible(false);
-            }}
+        <div
+          className="flex flex-row justify-between p-4 pr-16 border-b"
+          onClick={() => {
+            navigate("/sell");
+            setVisible(false);
+          }}
         >
           <p className="text-black">Sell</p>
           <p className="font-semibold text-black">
             <ArrowRight />
           </p>
         </div>
-        <div className="flex flex-row justify-between p-4 pr-16 border-b"
-            onClick={() => {
-                navigate("/magazine");
-                setVisible(false);
-            }}
+        <div
+          className="flex flex-row justify-between p-4 pr-16 border-b"
+          onClick={() => {
+            navigate("/magazine");
+            setVisible(false);
+          }}
         >
           <p className="text-black">Magazine</p>
           <p className="font-semibold text-black">
             <ArrowRight />
           </p>
         </div>
-        <div className="flex flex-row justify-between p-4 pr-16 border-b"
-            onClick={() => {
-                navigate("/subscription");
-                setVisible(false);
-            }}
+        <div
+          className="flex flex-row justify-between p-4 pr-16 border-b"
+          onClick={() => {
+            navigate("/subscription");
+            setVisible(false);
+          }}
         >
           <p className="text-black">Subscription</p>
+          <p className="font-semibold text-black">
+            <ArrowRight />
+          </p>
+        </div>
+        <div
+          className="flex flex-row justify-between p-4 pr-16 border-b"
+          onClick={() => {
+            navigate("/financial-lease");
+            setVisible(false);
+          }}
+        >
+          <p className="text-black">Financial Lease</p>
           <p className="font-semibold text-black">
             <ArrowRight />
           </p>

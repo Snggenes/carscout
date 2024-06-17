@@ -28,7 +28,7 @@ export function Price({ form }: PriceProps) {
       <div>
         <FormCheckBox
           form={form}
-          registerName="taxDeductible"
+          registerName="taxdeductible"
           registerString="Tax deductible"
         />
       </div>

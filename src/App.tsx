@@ -19,7 +19,10 @@ import Sell from "./pages/sell/Sell";
 import ListingForm from "./pages/listing-form/ListingForm";
 import Listing from "./pages/listing/Listing";
 import Magazine from "./pages/magazine/Magazine";
-
+import Auto from "./pages/auto/Auto";
+import Subscription from "./pages/subscription/Subscription";
+import FinancialLease from "./pages/lease/FinancialLease";
+import { ScrollToTop } from "./components/ScrollToTop";
 import Search from "./pages/advanced-search/Search";
 
 export default function App() {
@@ -27,6 +30,7 @@ export default function App() {
     <div className="">
       <ToastContainer position="bottom-left" autoClose={1500} hideProgressBar />
       <Router>
+        <ScrollToTop />
         <Navbar />
         <div className="">
           <Routes>
@@ -37,15 +41,18 @@ export default function App() {
             <Route path="/advanced-search" element={<Search />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/magazine" element={<Magazine />} />
+            <Route path="/financial-lease" element={<FinancialLease />} />
             <Route path="/listing-form" element={<ListingForm />} />
             <Route path="/listing/:id" element={<Listing />} />
+            <Route path="/auto" element={<Auto />} />
+            <Route path="/subscription" element={<Subscription />} />
             <Route path="/account" element={<Account />}>
               <Route path="appointments" element={<Appointments />} />
               <Route path="favorites" element={<Favorites />} />
               <Route path="listings" element={<Listings />} />
               <Route path="notifications" element={<Notifications />} />
               <Route path="searches" element={<Searches />} />
-              <Route path="settings" element={<Settings />} >
+              <Route path="settings" element={<Settings />}>
                 <Route path="remove-account" element={<RemoveAccount />} />
               </Route>
             </Route>

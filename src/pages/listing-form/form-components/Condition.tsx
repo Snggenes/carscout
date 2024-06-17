@@ -31,6 +31,7 @@ export function Condition({ form }: ConditionProps) {
           control={form.control}
           registerName="km"
           registerString="Km"
+          readOnly
         />
       </div>
       <div>
@@ -39,6 +40,7 @@ export function Condition({ form }: ConditionProps) {
           control={form.control}
           registerName="year"
           registerString="Year"
+          readOnly
         />
       </div>
       <div>
@@ -60,7 +62,7 @@ export function Condition({ form }: ConditionProps) {
       <div>
         <FormCheckBox
           form={form}
-          registerName="non-smoke"
+          registerName="nonsmoke"
           registerString="Non-smoke car"
         />
       </div>
@@ -94,7 +96,7 @@ export function Condition({ form }: ConditionProps) {
       <div>
         <FormCheckBox
           form={form}
-          registerName="vehicle-damage"
+          registerName="vehicledamage"
           registerString="Vehicle damage"
         />
       </div>

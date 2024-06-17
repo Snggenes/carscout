@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { Form } from "../../components/ui/form";
@@ -31,7 +31,7 @@ export default function ListingForm() {
   const searchParamsObject = Object.fromEntries([...searchParams.entries()]);
 
   const [image, setImage] = useState([]);
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mileage: km, licencePlate } = searchParamsObject;
   const [car, setCar] = useState<TCarCheck | null>();
@@ -67,8 +67,8 @@ export default function ListingForm() {
         power: Number(car?.nettomaximumvermogen).toString() || undefined,
         year: car.datum_eerste_toelating.substring(0, 4) || "",
         cilinders: car.aantal_cilinders || undefined,
-        cilinderCapacity: car.cilinderinhoud || undefined,
-        emptyWeight: car.massa_ledig_voertuig || undefined,
+        cilindercapacity: car.cilinderinhoud || undefined,
+        emptyweight: car.massa_ledig_voertuig || undefined,
         ...listingFormDefaultValues,
       });
     }
@@ -87,13 +87,11 @@ export default function ListingForm() {
 
   const { mutate } = useMutation({
     mutationFn: (data: FieldValues) => postListing(data, image, toast),
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["cars"] });
-    //   navigate("/");
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+      navigate("/");
+    },
   });
-
-  console.log(car);
 
   if (!car) {
     return <div className="pt-16">Loading...</div>;
@@ -102,7 +100,11 @@ export default function ListingForm() {
   return (
     <div className="pt-16 w-full flex flex-col items-center">
       <div className="mt-10 w-full max-w-[1200px] px-10 text-3xl">
-        {car ? `${capitalizeFirstLetter(car.merk)} ${capitalizeFirstLetter(car.handelsbenaming)}` : "---"}
+        {car
+          ? `${capitalizeFirstLetter(car.merk)} ${capitalizeFirstLetter(
+              car.handelsbenaming
+            )}`
+          : "---"}
       </div>
       <div className="min-h-screen w-full max-w-[1200px] grid grid-cols-8 gap-4">
         <div className="w-full hidden md:block md:col-span-3">

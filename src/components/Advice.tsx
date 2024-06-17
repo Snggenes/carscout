@@ -1,9 +1,15 @@
 import { Info, ArrowRight, Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function Advice() {
+  const navigate = useNavigate();
   return (
     <div className="w-full max-w-[1200px] bg-white mt-4 flex flex-col lg:flex-row items-center justify-center gap-4">
-      <div className="relative h-[280px] w-full lg:w-1/2 bg-[url('https://i.pinimg.com/originals/69/44/f7/6944f78fdd2376486bd6a81166a06c37.jpg')] bg-cover bg-center bg-no-repeat cursor-pointer">
+      <div
+        className="relative h-[280px] w-full lg:w-1/2 bg-[url('https://i.pinimg.com/originals/69/44/f7/6944f78fdd2376486bd6a81166a06c37.jpg')] bg-cover bg-center bg-no-repeat cursor-pointer"
+        onClick={() => navigate("/auto")}
+      >
         <AdviceInfo />
         <div className="text-white flex flex-col gap-2 lg:gap-4 absolute bottom-2 left-2 lg:bottom-4 lg:left-4">
           <p className="text-lg">Overview of all models and brands</p>
@@ -13,7 +19,10 @@ export function Advice() {
           </div>
         </div>
       </div>
-      <div className="relative h-[280px] w-full lg:w-1/2 bg-[url('https://s.aolcdn.com/os/ab/_cms/2023/06/25195051/2024-Audi-RS-6-Avant-in-Mythos-Black-action-rear-three-quarter-misty.jpg')] bg-cover bg-center bg-no-repeat cursor-pointer">
+      <div
+        className="relative h-[280px] w-full lg:w-1/2 bg-[url('https://s.aolcdn.com/os/ab/_cms/2023/06/25195051/2024-Audi-RS-6-Avant-in-Mythos-Black-action-rear-three-quarter-misty.jpg')] bg-cover bg-center bg-no-repeat cursor-pointer"
+        onClick={() => toast.info("This feature is not available yet!")}
+      >
         <AdviceInfo />
         <LeaseInfo />
       </div>

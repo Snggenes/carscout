@@ -2,7 +2,7 @@ import { Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full max-w-[1200px] flex flex-col px-8">
+    <footer className="w-full max-w-[1200px] flex flex-col px-8 bg-[#F4F4F4] pt-12">
       <h1 className="font-bold">Carscout: European online car platform.</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 py-8 gap-8">
         <div className="flex flex-col gap-4">

@@ -60,7 +60,7 @@ export function Engine({ form }: EngineProps) {
           <CardDescription>Cylinder capacity</CardDescription>
           <FormInput
             control={form.control}
-            registerName="cilinderCapacity"
+            registerName="cilindercapacity"
             registerString="Cilinder capacity"
             readOnly
           />
@@ -69,7 +69,7 @@ export function Engine({ form }: EngineProps) {
           <CardDescription>Empty weight</CardDescription>
           <FormInput
             control={form.control}
-            registerName="emptyWeight"
+            registerName="emptyweight"
             registerString="Empty weight"
             readOnly
           />

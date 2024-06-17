@@ -1777,8 +1777,6 @@ export const km = [
 
 export const transmission = ["Automatic", "Manual"];
 
-
-
 export const power = [
   "50",
   "60",
@@ -1896,17 +1894,7 @@ export const colors = [
   "Yellow",
   "Other",
 ];
-export const seats = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-];
+export const seats = ["2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 export const upholstery = [
   "Cloth",
@@ -1916,12 +1904,92 @@ export const upholstery = [
   "Other",
 ];
 
-export const condition = [ "Used", "OldTimer"];
+export const condition = ["Used", "OldTimer"];
 
 export const drive = ["Front", "Rear", "4x4"];
 
 export const gears = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const energyLabel = ["Normal/Benzin 91","Super 95", "Super Plus 98","Benzine E10 91", "Benzine E10 95", "Benzine E10 98", "Super Plus E10 98"];
+export const energyLabel = [
+  "Normal/Benzin 91",
+  "Super 95",
+  "Super Plus 98",
+  "Benzine E10 91",
+  "Benzine E10 95",
+  "Benzine E10 98",
+  "Super Plus E10 98",
+];
 
-export const emissionClass = ["Euro 1", "Euro 2", "Euro 3", "Euro 4", "Euro 5", "Euro 6", "Euro 6d-TEMP", "Euro 6d", "Euro 6c", "Euro 6b", "Euro 6e"];
+export const emissionClass = [
+  "Euro 1",
+  "Euro 2",
+  "Euro 3",
+  "Euro 4",
+  "Euro 5",
+  "Euro 6",
+  "Euro 6d-TEMP",
+  "Euro 6d",
+  "Euro 6c",
+  "Euro 6b",
+  "Euro 6e",
+];
+
+export const topBrands = [
+  "Audi",
+  "Bmw",
+  "Volvo",
+  "Hyundai",
+  "Kia",
+  "Mercedes-Benz",
+  "Skoda",
+  "Peugeot",
+  "Renault",
+  "Tesla",
+  "Toyota",
+  "Volkswagen",
+];
+
+export const popularModels = [
+  "Audi A1",
+  "Audi A3",
+  "Dacia Sandero",
+  "Fiat 500",
+  "Mercedes A Klasse",
+  "Peugeot 2008",
+  "Peugeot 208",
+  "Peugeot 308",
+  "Polestar 2",
+  "Renault Arkana",
+  "Tesla Model 3",
+  "Toyota Yaris",
+];
+
+export const popularElectricModels = [
+  "Audi E-tron",
+  "BMW I8",
+  "Ford Mustang Mach-E",
+  "Hyundai Kona",
+  "Kia E-Niro",
+  "Mercedes EQA",
+  "Nissan Leaf",
+  "Renault Zoe",
+  "Tesla Model S",
+  "Tesla Model X",
+  "Volkswagen Id.3",
+  "Volvo Xc40",
+];
+
+export const topCities = [
+  "Amsterdam",
+  "Rotterdam",
+  "Den Haag",
+  "Utrecht",
+  "Eindhoven",
+  "Tilburg",
+  "Groningen",
+  "Almere",
+  "Breda",
+  "Nijmegen",
+  "Apeldoorn",
+  "Haarlem",
+];

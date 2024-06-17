@@ -18,6 +18,7 @@ export function Characteristics({ form }: CharacteristicsProps) {
           control={form.control}
           registerName="body"
           registerString="Body"
+          readOnly
         />
       </div>
       <div>
@@ -26,6 +27,7 @@ export function Characteristics({ form }: CharacteristicsProps) {
           control={form.control}
           registerName="seat"
           registerString="Seats"
+          readOnly
         />
       </div>
       <div>
@@ -34,6 +36,7 @@ export function Characteristics({ form }: CharacteristicsProps) {
           control={form.control}
           registerName="door"
           registerString="Doors"
+          readOnly
         />
       </div>
       <div>

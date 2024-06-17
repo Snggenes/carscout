@@ -23,24 +23,36 @@ export type Taddress = {
 export type TCar = {
   _id: string;
   brand: string;
-  licencePlate: string;
   model: string;
-  price: number;
-  year: number;
-  km: number;
-  power: number;
-  color: string;
+  licencePlate: string;
+  body: string;
   seat: number;
   door: number;
-  body: string;
-  transmission: string;
+  color: string;
+  metallic: boolean;
+  upholstery: string;
+  interior: string;
   condition: string;
+  km: number;
+  year: number;
+  nonsmoke: boolean;
+  vehicledamage: boolean;
+  drive: string;
+  transmission: string;
+  power: number;
+  gears: number;
+  cilinders: number;
+  cilindercapacity: number;
+  emptyweight: number;
   fuel: string;
-  image: [string];
   description?: string;
+  price: number;
+  phone: string;
+  address: Taddress;
+  image: [string];
   owner: string;
   createdAt: Date;
-  address: Taddress;
+  clickCounter: number;
 };
 
 export type TCarCheck = {
@@ -58,4 +70,4 @@ export type TCarCheck = {
   nettomaximumvermogen: string;
   aantal_cilinders: string;
   massa_ledig_voertuig: string;
-}
+};

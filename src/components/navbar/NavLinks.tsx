@@ -16,6 +16,9 @@ export function NavLinks() {
       <Button variant="ghost" className="text-[#F4F4F4] text-base hover:bg-white hover:text-black transition duration-500" asChild>
         <Link to="/subscription">Subscription</Link>
       </Button>
+      <Button variant="ghost" className="text-[#F4F4F4] text-base hover:bg-white hover:text-black transition duration-500" asChild>
+        <Link to="/financial-lease">Financial Lease</Link>
+      </Button>
     </div>
   );
 }

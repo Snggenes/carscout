@@ -133,25 +133,22 @@ export async function postListing(
   image: string[],
   toast: any
 ) {
-  // if (image.length === 0) {
-  //   return toast.error("Please fill in all the fields");
-  // }
-  // const res = await fetch(`/api/cars`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   credentials: "include",
-  //   body: JSON.stringify({ ...data, image }),
-  // });
-  // const newCar = await res.json();
-  // if (newCar.error) {
-  //   return toast.error(newCar.error);
-  // }
-  // toast.success(newCar.message);
-  console.log(image);
-  console.log(toast);
-  console.log(data);
+  if (image.length === 0) {
+    return toast.error("Please fill in all the fields");
+  }
+  const res = await fetch(`/api/cars`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ ...data, image }),
+  });
+  const newCar = await res.json();
+  if (newCar.error) {
+    return toast.error(newCar.error);
+  }
+  toast.success(newCar.message);
 }
 
 export async function handleNotifications(
