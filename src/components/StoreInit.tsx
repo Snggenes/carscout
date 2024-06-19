@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { useCarStore } from "@/contexts/store";
 
 export function StoreInit() {
-  const { fetchAllCars, initialized } = useCarStore();
+  const { fetchBrandsAndModels, initialized } = useCarStore();
 
   useEffect(() => {
     if (!initialized) {
-      fetchAllCars();
+        fetchBrandsAndModels();
+        console.log("fetching brands and models");
     }
-  }, [initialized, fetchAllCars]);
+  }, [initialized, fetchBrandsAndModels]);
 
   return null;
 }

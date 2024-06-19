@@ -23,6 +23,7 @@ type SearchProps = {
 };
 
 export function Search({ className = "" }: SearchProps) {
+  const [carsCount, setCarsCount] = useState<number | undefined | null>(null);
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
@@ -31,19 +32,12 @@ export function Search({ className = "" }: SearchProps) {
   });
 
   const { brandsAndModels } = useCarStore();
-  const { allCars, modifiedCars, modifyCars } = useCarStore();
 
   const carDataBrands = brandsAndModels.map((item) => item.brand);
   const selectedBrand = form.watch("brand");
   const selectedModel = form.watch("model");
   const selectedPrice = form.watch("price");
   const selectedYear = form.watch("year");
-
-  useEffect(() => {
-    if (selectedBrand || selectedModel || selectedPrice || selectedYear) {
-      modifyCars(selectedBrand, selectedModel, selectedPrice, selectedYear);
-    }
-  }, [selectedBrand, selectedModel, selectedPrice, selectedYear]);
 
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
 
@@ -52,9 +46,23 @@ export function Search({ className = "" }: SearchProps) {
       const selectedModels = brandsAndModels.find(
         (item) => item.brand === selectedBrand
       )?.models;
+      form.setValue("model", "");
       setSelectedModels(selectedModels || []);
     }
   }, [selectedBrand]);
+
+  async function fetchCountOfCars() {
+    const res = await fetch(
+      `/api/search?brand=${selectedBrand}&model=${selectedModel}&price=${selectedPrice}&year=${selectedYear}`
+    );
+    const data = await res.json();
+    setCarsCount(data.count);
+    return data;
+  }
+
+  useEffect(() => {
+    fetchCountOfCars();
+  }, [selectedBrand, selectedModel, selectedPrice, selectedYear]);
 
   const { mutate } = useMutation({
     mutationFn: (data: z.infer<typeof SearchSchema>) =>
@@ -105,9 +113,7 @@ export function Search({ className = "" }: SearchProps) {
           />
 
           <Button type="submit" variant="ghost" className="bg-yellow-300">
-            {selectedBrand || selectedModel || selectedPrice || selectedYear
-              ? `${modifiedCars.length} Results`
-              : `${allCars.length} Results`}
+            {carsCount ? `${carsCount} Results` : "Search"}
           </Button>
           <h1
             onClick={() => {
