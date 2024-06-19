@@ -23,6 +23,7 @@ import Auto from "./pages/auto/Auto";
 import Subscription from "./pages/subscription/Subscription";
 import FinancialLease from "./pages/lease/FinancialLease";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { StoreInit } from "./components/StoreInit";
 import Search from "./pages/advanced-search/Search";
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
       <ToastContainer position="bottom-left" autoClose={1500} hideProgressBar />
       <Router>
         <ScrollToTop />
+        <StoreInit />
         <Navbar />
         <div className="">
           <Routes>

@@ -23,10 +23,8 @@ export default function Home() {
       ref={topRef}
       className="pt-16 flex flex-col justify-center items-center w-full"
     >
-      <div className="w-full md:p-8 flex flex-col justify-between items-center h-[220px] sm:h-[290px] md:h-[360px] lg:h-[430px] xl:h-[500px] bg-[url('https://www.autoscout24.nl/assets/as24-home/images/brandboxes/nl-NL/leasing-v2/size_xl.jpg.webp')] bg-cover bg-center bg-no-repeat">
-        <div></div>
-        <div></div>
-        <Search className="hidden md:block" />
+      <div className="w-full md:p-8 flex flex-col justify-center items-center h-[220px] sm:h-[290px] md:h-[360px] lg:h-[430px] xl:h-[500px] bg-[url('https://www.autoscout24.nl/assets/as24-home/images/brandboxes/nl-NL/leasing-v2/size_xl.jpg.webp')] bg-cover bg-center bg-no-repeat">
+        <Search className="hidden md:block mt-32" />
       </div>
       <div className="w-full mt-4 md:hidden">
         <SearchWindow />
